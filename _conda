@@ -23,30 +23,30 @@ case $state in
     local -a config
     local -a special
     package=(
-        search:'Search for packages and display their information.'
-        install:'Install a list of packages into a specified conda environment.'
+        search   : 'Search for packages and display their information.'
+        install  : 'Install a list of packages into a specified conda environment.'
     )
     maint=(
-        update:'Update conda packages.'
-        clean:'Remove unused packages and caches.'
+        update   : 'Update conda packages.'
+        clean    : 'Remove unused packages and caches.'
     )
     environment=(
-        info:'Display information about current conda install.'
-        create:'Create a new conda environment from a list of specified packages.'
-        list:'List linked packages in a conda environment.'
-        remove:'Remove a list of packages from a specified conda environment.'
+        info     : 'Display information about current conda install.'
+        create   : 'Create a new conda environment from a list of specified packages.'
+        list     : 'List linked packages in a conda environment.'
+        remove   : 'Remove a list of packages from a specified conda environment.'
     )
     help=(
-        help:'Displays a list of available conda commands and their help strings.'
+        help     : 'Displays a list of available conda commands and their help strings.'
     )
     config=(
-        config:'Modify configuration values in .condarc.'
+        config   : 'Modify configuration values in .condarc.'
     )
     special=(
-        run:'Launches an application installed with Conda.'
-        init:'Initialize conda into a regular environment. (DEPRECATED)'
-        package:'Low-level conda package utility. (EXPERIMENTAL)'
-        bundle:'Create or extract a "bundle package" (EXPERIMENTAL)'
+        run      : 'Launches an application installed with Conda.'
+        init     : 'Initialize conda into a regular environment. (DEPRECATED)'
+        package  : 'Low-level conda package utility. (EXPERIMENTAL)'
+        bundle   : 'Create or extract a "bundle package" (EXPERIMENTAL)'
     )
     _describe -t package_commands "package commands" package
     _describe -t maint_commands "maint commands" maint
