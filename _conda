@@ -90,6 +90,7 @@ case $state in
                       '--revision[revert to the specified revision]:revision' \
                       '(-y --yes)'{-y,--yes}'[do not ask for confirmation]' \
                       '--dry-run[only display what would have been done]' \
+                      '(-f --force)'{-f,--force}'[force install]' \
                       '--file[read package versions from file]:file:_path_files' \
                       '--unknown[use index metadata from the local package cache]' \
                       '--no-deps[do not install dependencies]' \
