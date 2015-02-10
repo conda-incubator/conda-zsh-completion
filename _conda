@@ -12,6 +12,18 @@ __conda_envs(){
 
 }
 
+__conda_packages_search(){
+    local -a packages
+    packages=($(conda search --use-index-cache --json |
+    python -c "
+import json, sys
+parsed = json.load(sys.stdin)
+for k in parsed.keys():
+    print(k)
+        "))
+    _describe -t packages 'available packages' packages
+}
+
 __conda_channels(){
 
     local -a channels
@@ -89,6 +101,7 @@ case $state in
                    '--copy[Install all packages using copies instead of hard- or soft-linking]' \
                    '--alt-hint[Use an alternate algorithm to generate an unsatisfiable hint]' \
                    '--json[report all output as json.]' \
+                   '*:packages:__conda_packages_search' \
         ;;
     (*)
         #_arguments -C $opts
