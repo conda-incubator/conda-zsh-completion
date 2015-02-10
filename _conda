@@ -129,6 +129,24 @@ case $state in
                       '--no-pip[Do not include pip-only installed packages]' \
                       '*:regex:' \
         ;;
+    (search)
+        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+                      '(-n --name=)'{-n,--name=}'[name of environment]:environment:__conda_envs' \
+                      '(-p --prefix)'{-p,--prefix}'[full path to environment prefix]:path:_path_files' \
+                      '(-c --canonical)'{-c,--canonical}'[output canonical names of packages only]' \
+                      '--unknown[use index metadata from the local package cache]' \
+                      '--use-index-cache[use cache of channel index files]' \
+                      '(-c --channel)'{-c,--channel}'[additional channel to search for packages]:channel:__conda_channels'\
+                      '--override-channels [do not search default or .condarc channels]' \
+                      '--json[report all output as json.]' \
+                      '(-o --outdated)'{-o,--outdated}'[only display installed but outdated packages]' \
+                      '(-v --verbose)'{-v,--verbose}'[Show available packages as blocks of data]' \
+                      '--platform[Search the given platform.]' \
+                      '--spec[Treat regex argument as a package specification]' \
+                      '--json[report all output as json.]' \
+                      '--use-local[use locally built packages]' \
+                      '*:regex:' \
+        ;;
     (update)
         _arguments -C $install_opts \
                       '--all[Update all installed packages in the environment]' \
