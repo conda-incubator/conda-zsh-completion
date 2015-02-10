@@ -32,18 +32,7 @@ __conda_channels(){
 
 }
 
-local -a opts
-opts=(
-    '(-h --help)'{-h,--help}'[show this help message and exit]'
-    '(-v --version)'{-v,--version}'[show program''s version number and exit]'
-)
-
-_arguments -C $opts \
-           ': :->command' \
-           '*:: :->subcmd'
-
-case $state in
-(command)
+__conda_commands(){
     local -a package maint environment help config special
     package=(
         search:'Search for packages and display their information.'
@@ -77,11 +66,26 @@ case $state in
     _describe -t help_commands "help commands"  help
     _describe -t config_commands "config commands"  config
     _describe -t special_commands "special commands"  special
+}
+
+local -a opts
+opts=(
+    '(-h --help)'{-h,--help}'[show this help message and exit]'
+    '(-v --version)'{-v,--version}'[show program''s version number and exit]'
+)
+
+_arguments -C $opts \
+           ': :->command' \
+           '*:: :->subcmd'
+
+case $state in
+(command)
+    __conda_commands
     ;;
 (subcmd)
     case ${line[1]} in
     (install)
-        _arguments '(-n --name=)'{-n,--name=}'[install into given conda environment]:environment:__conda_envs' \
+        _arguments -C '(-n --name=)'{-n,--name=}'[install into given conda environment]:environment:__conda_envs' \
                    '(-h --help)'{-h,--help}'[show the help message and exit]' \
                    '--revision[revert to the specified revision]:revision' \
                    '(-y --yes)'{-y,--yes}'[do not ask for confirmation]' \
@@ -113,6 +117,9 @@ case $state in
                       '(-r --revisions)'{-r,--revision}'[list the revision history and exit]' \
                       '--no-pip[Do not include pip-only installed packages]' \
                       '*:regex:' \
+        ;;
+    (help)
+        _arguments -C '*:commands:__conda_commands' \
         ;;
     (*)
         #_arguments -C $opts
