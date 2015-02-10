@@ -147,6 +147,13 @@ case $state in
                       '--all[Update all installed packages in the environment]' \
                       '*:packages:__conda_packages_installed' \
         ;;
+    (create)
+        _arguments -C $base_opts \
+                      $install_opts \
+                      '--clone[path to (or name of) existing local environmen]' \
+                      '--no-default-packages[ignore create_default_packages in condarc file]' \
+                      '*:packages:__conda_packages_search' \
+        ;;
     (help)
         _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
                       '*:commands:__conda_commands' \
