@@ -150,7 +150,7 @@ case $state in
     (create)
         _arguments -C $base_opts \
                       $install_opts \
-                      '--clone[path to (or name of) existing local environmen]' \
+                      '--clone[path to (or name of) existing local environment]' \
                       '--no-default-packages[ignore create_default_packages in condarc file]' \
                       '*:packages:__conda_packages_search' \
         ;;
