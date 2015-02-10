@@ -103,6 +103,17 @@ case $state in
                    '--json[report all output as json.]' \
                    '*:packages:__conda_packages_search' \
         ;;
+    (list)
+        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+                      '(-n --name=)'{-n,--name=}'[install into given conda environment]:environment:__conda_envs' \
+                      '(-p --prefix)'{-p,--prefix}'[full path to environment prefix]:path:_path_files' \
+                      '--json[report all output as json.]' \
+                      '(-c --canonical)'{-c,--canonical}'[output canonical names of packages only]' \
+                      '(-e --export)'{-e,--export}'[output requirement string only]' \
+                      '(-r --revisions)'{-r,--revision}'[list the revision history and exit]' \
+                      '--no-pip[Do not include pip-only installed packages]' \
+                      '*:regex:' \
+        ;;
     (*)
         #_arguments -C $opts
         _path_files
