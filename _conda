@@ -16,12 +16,7 @@ _arguments -C \
 
 case $state in
 (command)
-    local -a package
-    local -a maint
-    local -a environment
-    local -a help
-    local -a config
-    local -a special
+    local -a package maint environment help config special
     package=(
         search   : 'Search for packages and display their information.'
         install  : 'Install a list of packages into a specified conda environment.'
