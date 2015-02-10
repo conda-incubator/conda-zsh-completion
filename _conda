@@ -138,6 +138,15 @@ case $state in
         _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
                       '*:commands:__conda_commands' \
         ;;
+    (info)
+        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+                      '--json[report all output as json.]' \
+                      '(-a --all)'{-a,--all}'[show all information, (environments, license, and system information]' \
+                      '(-e --envs)'{-e,--envs}'[list all known conda environments]' \
+                      '(-l --license)'{-l,--license}'[display information about local conda licenses list]' \
+                      '(-s --system)'{-s,--system}'[list environment variables]' \
+                      '--root[display root environment path]'
+        ;;
     (*)
         #_arguments -C $opts
         _path_files
