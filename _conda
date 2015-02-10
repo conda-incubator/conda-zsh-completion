@@ -4,6 +4,13 @@
 local state line context
 local -A opt_args
 
+__conda_envs(){
+
+    local -a envs
+    envs=($( conda info -e | sed "1,2d" | cut -f1 -d' '))
+    _describe -t envs 'conda environments' envs
+
+}
 local -a opts
 opts=(
     '(-h --help)'{-h,--help}'[show this help message and exit]'
@@ -52,6 +59,9 @@ case $state in
     ;;
 (subcmd)
     case ${line[1]} in
+    (install)
+        _arguments '(-n --name=)'{-n,--name=}'[install into given conda environment]:environment:__conda_envs' \
+        ;;
     (*)
         #_arguments -C $opts
         _path_files
