@@ -78,8 +78,8 @@ _arguments -C $opts \
            ': :->command' \
            '*:: :->subcmd'
 
-
 install_opts=(
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
     '(-y --yes)'{-y,--yes}'[do not ask for confirmation]' \
     '--dry-run[only display what would have been done]' \
     '(-f --force)'{-f,--force}'[force install]' \
@@ -108,8 +108,7 @@ case $state in
 (subcmd)
     case ${line[1]} in
     (install)
-        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
-                      $install_opts \
+        _arguments -C $install_opts \
                       '--revision[revert to the specified revision]:revision' \
                       '*:packages:__conda_packages_search' \
         ;;
