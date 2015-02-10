@@ -12,6 +12,12 @@ __conda_envs(){
 
 }
 
+__conda_packages_installed(){
+    local -a packages
+    packages=($(conda list | sed 1,2d | cut -f1 -d' '))
+    _describe -t packages 'installed packages' packages
+}
+
 __conda_packages_search(){
     local -a packages
     packages=($(conda search --use-index-cache --json |
@@ -126,6 +132,7 @@ case $state in
     (update)
         _arguments -C $install_opts \
                       '--all[Update all installed packages in the environment]' \
+                      '*:packages:__conda_packages_installed' \
         ;;
     (help)
         _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
