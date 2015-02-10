@@ -119,7 +119,8 @@ case $state in
                       '*:regex:' \
         ;;
     (help)
-        _arguments -C '*:commands:__conda_commands' \
+        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+                      '*:commands:__conda_commands' \
         ;;
     (*)
         #_arguments -C $opts
