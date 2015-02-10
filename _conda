@@ -124,7 +124,8 @@ case $state in
                       '*:regex:' \
         ;;
     (update)
-        _arguments -C $install_opts
+        _arguments -C $install_opts \
+                      '--all[Update all installed packages in the environment]' \
         ;;
     (help)
         _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
