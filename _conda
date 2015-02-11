@@ -237,6 +237,19 @@ case $state in
                       '--pkg-version[package version of the created package]' \
                       '--pkg-build[package build number of the created package]' \
         ;;
+    (bundle)
+        _arguments -C $help_opts \
+                      $env_opts \
+                      $json_opts \
+                      '(-c --create)'{-c,--create}'[create bundle]' \
+                      '(-x --extract)'{-x,--extract}'[extact bundle located at PATH]:PATH:_path_files' \
+                      '--metadump[dump metadata of bundle at PATH]:PATH:_path_files' \
+                      '(-q --quiet)'{-q,--quiet}'[do not display progress bar]'\
+                      '--bundle-name[name of bundle]:NAME:' \
+                      '--data-path[path to data to be included in bundle]:PATH:_path_files' \
+                      '--extra-meta[path to json file with additional meta-data no]:PATH:_path_files' \
+                      '--no-env[no environment]' \
+        ;;
     (*)
         #_arguments -C $opts
         _path_files
