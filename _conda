@@ -34,6 +34,28 @@ __conda_channels(){
     _describe -t channels 'conda channels' channels
 }
 
+__conda_config(){
+    local config_options
+    config_options=('channels'
+                    'disallow'
+                    'create_default_packages'
+                    'track_features'
+                    'envs_dirs'
+                    'add_binstar_token'
+                    'always_yes'
+                    'allow_softlinks'
+                    'changeps1'
+                    'use_pip'
+                    'offline'
+                    'binstar_upload'
+                    'binstar_personal'
+                    'show_channel_urls'
+                    'allow_other_channels'
+                    'ssl_verify'
+                    )
+    _describe -t config_options 'conda configuration' config_options
+}
+
 __conda_commands(){
     local -a package maint environment help config special
     package=(
@@ -205,7 +227,7 @@ case $state in
                       $json_opts \
                       '--system[write to the system .condarc file]' \
                       '--file[write to the given file.]:file:_path_files' \
-                      '--get[get the configuration value]' \
+                      '--get[get the configuration value]:key:__conda_config' \
                       '--add[add one configuration value to a list key]' \
                       '--set[set a boolean key]' \
                       '--remove[remove a configuration value from a list key]' \
