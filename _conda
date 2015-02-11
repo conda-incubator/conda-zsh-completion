@@ -229,13 +229,13 @@ case $state in
     (package)
         _arguments -C $help_opts \
                       $env_opts \
-                      '(-w --which)'{-w,--which}'[given some path print which conda package the file came from]' \
+                      '(-w --which)'{-w,--which}'[given some path print which conda package the file came from]:path:_path_files' \
                       '(-L --ls-files)'{-L,--ls-files}'[list all files belonging to specified package]' \
                       '(-r --reset)'{-r,--reset}'[remove all untracked files and exit]' \
                       '(-u --untracked)'{-u,--untracked}'[display all untracked files and exit]' \
-                      '--pkg-name[package name of the created package]' \
-                      '--pkg-version[package version of the created package]' \
-                      '--pkg-build[package build number of the created package]' \
+                      '--pkg-name[package name of the created package]:pkg_name:' \
+                      '--pkg-version[package version of the created package]:pkg_version:' \
+                      '--pkg-build[package build number of the created package]:pkg_build:' \
         ;;
     (bundle)
         _arguments -C $help_opts \
