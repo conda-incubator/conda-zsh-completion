@@ -221,6 +221,7 @@ case $state in
                       '--no-pin[ignore pinned file]' \
                       '(-q --quiet)'{-q,--quiet}'[do not display progress bar]'\
                       '--offline[offline mode, don''t connect to internet]' \
+                      '*:packages:__conda_packages_installed' \
         ;;
     (config)
         _arguments -C $help_opts \
