@@ -84,10 +84,12 @@ _arguments -C $opts \
            ': :->command' \
            '*:: :->subcmd'
 
+help_opts=(
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    )
 
 
 base_opts=(
-    '(-h --help)'{-h,--help}'[show the help message and exit]' \
     '(-n --name=)'{-n,--name=}'[name of environment]:environment:__conda_envs' \
     '(-p --prefix)'{-p,--prefix}'[full path to environment prefix]:path:_path_files' \
     '--unknown[use index metadata from the local package cache]' \
@@ -118,7 +120,7 @@ case $state in
 (subcmd)
     case ${line[1]} in
     (info)
-        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+        _arguments -C $help_opts \
                       '--json[report all output as json.]' \
                       '(-a --all)'{-a,--all}'[show all information, (environments, license, and system information]' \
                       '(-e --envs)'{-e,--envs}'[list all known conda environments]' \
@@ -127,11 +129,11 @@ case $state in
                       '--root[display root environment path]'
         ;;
     (help)
-        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+        _arguments -C $help_opts \
                       '*:commands:__conda_commands' \
         ;;
     (list)
-        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+        _arguments -C $help_opts \
                       '(-n --name=)'{-n,--name=}'[install into given conda environment]:environment:__conda_envs' \
                       '(-p --prefix)'{-p,--prefix}'[full path to environment prefix]:path:_path_files' \
                       '--json[report all output as json.]' \
@@ -142,7 +144,8 @@ case $state in
                       '*:regex:' \
         ;;
     (search)
-        _arguments -C $base_opts \
+        _arguments -C $help_opts \
+                      $base_opts \
                       '(-c --canonical)'{-c,--canonical}'[output canonical names of packages only]' \
                       '(-o --outdated)'{-o,--outdated}'[only display installed but outdated packages]' \
                       '(-v --verbose)'{-v,--verbose}'[Show available packages as blocks of data]' \
