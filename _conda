@@ -53,6 +53,7 @@ __conda_commands(){
         create:'Create a new conda environment from a list of specified packages.'
         list:'List linked packages in a conda environment.'
         remove:'Remove a list of packages from a specified conda environment.'
+        uninstall:'Alias for conda remove'
     )
     help=(
         help:'Displays a list of available conda commands and their help strings.'
