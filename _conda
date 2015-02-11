@@ -104,8 +104,6 @@ channel_opts=(
     '--use-local[use locally built packages]' \
     )
 
-base_opts=(
-    )
 install_opts=(
     '(-y --yes)'{-y,--yes}'[do not ask for confirmation]' \
     '--dry-run[only display what would have been done]' \
@@ -151,7 +149,6 @@ case $state in
         ;;
     (search)
         _arguments -C $help_opts \
-                      $base_opts \
                       $env_opts \
                       $json_opts \
                       $channel_opts \
@@ -165,7 +162,6 @@ case $state in
         ;;
     (create)
         _arguments -C $help_opts \
-                      $base_opts \
                       $env_opts \
                       $install_opts \
                       $json_opts \
@@ -177,7 +173,6 @@ case $state in
         ;;
     (install)
         _arguments -C $help_opts \
-                      $base_opts \
                       $env_opts \
                       $install_opts \
                       $json_opts \
@@ -187,7 +182,6 @@ case $state in
         ;;
     (update)
         _arguments -C $help_opts \
-                      $base_opts \
                       $env_opts \
                       $install_opts \
                       $json_opts \
