@@ -228,10 +228,10 @@ case $state in
                       '--system[write to the system .condarc file]' \
                       '--file[write to the given file.]:file:_path_files' \
                       '--get[get the configuration value]:key:__conda_config' \
-                      '--add[add one configuration value to a list key]' \
-                      '--set[set a boolean key]' \
-                      '--remove[remove a configuration value from a list key]' \
-                      '--remove-key[remove a configuration key (and all its values)]' \
+                      '--add[add one configuration value to a list key]:key:__conda_config' \
+                      '--set[set a boolean key]:key:__conda_config' \
+                      '--remove[remove a configuration value from a list key]:key:__conda_config' \
+                      '--remove-key[remove a configuration key (and all its values)]:key:__conda_config' \
                       '(-f --force)'{-f,--force}'[write to the config file using the yaml parser]' \
         ;;
     (init)
