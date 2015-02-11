@@ -90,7 +90,7 @@ json_opts=(
     )
 
 env_opts=(
-    '(-n --name=)'{-n,--name=}'[name of environment]:environment:__conda_envs' \
+    '(-n --name)'{-n,--name}'[name of environment]:environment:__conda_envs' \
     '(-p --prefix)'{-p,--prefix}'[full path to environment prefix]:path:_path_files' \
     )
 
