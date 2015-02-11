@@ -22,6 +22,7 @@
 # * Completion for 'conda config' is somewhat incomplete
 #   * 'conda config --get' only completes a single option.
 #   * 'conda config --add' completes only the key, not the value.
+#   * Similar issues for other options.
 # * Completion for 'conda install' and others that query list of available or
 #   existing packages is slow, consider caching.
 # * Completion for version numbers is entirely missing:
@@ -32,7 +33,7 @@
 #   that option is given.
 # * Completion of channels is rudimentary, conda isn't queried for defined
 #   channels.
-# * Configuration for external commands is entirely missing.
+# * Configuration for external commands, e.g. 'build' is entirely missing.
 
 local state line context
 local -A opt_args
