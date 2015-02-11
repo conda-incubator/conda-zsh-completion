@@ -191,11 +191,19 @@ case $state in
                       '--all[Update all installed packages in the environment]' \
                       '*:packages:__conda_packages_installed' \
         ;;
-    (remove)
+    (remove|uninstall)
         _arguments -C $help_opts \
                       $env_opts \
                       $json_opts \
                       $channel_opts \
+                      '(-y --yes)'{-y,--yes}'[do not ask for confirmation]' \
+                      '--dry-run[only display what would have been done]' \
+                      '(-a --all)'{-a,--all}'[remove all packages, i.e. the entire environment]' \
+                      '--features[remove features (instead of packages)]' \
+                      '--no-pin[ignore pinned file]' \
+                      '(-q --quiet)'{-q,--quiet}'[do not display progress bar]'\
+                      '--offline[offline mode, don''t connect to internet]' \
+        ;;
     (*)
         #_arguments -C $opts
         _path_files
