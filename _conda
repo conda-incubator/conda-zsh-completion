@@ -226,6 +226,17 @@ case $state in
                       '(-p --packages)'{-p,--packages}'[remove unused cached packages]' \
                       '(-s --source-cache)'{-s,--source-cache}'[remove files from the source cache of conda build]' \
         ;;
+    (package)
+        _arguments -C $help_opts \
+                      $env_opts \
+                      '(-w --which)'{-w,--which}'[given some PATH print which conda package the file came from]' \
+                      '(-L --ls-files)'{-L,--ls-files}'[list all files belonging to specified package]' \
+                      '(-r --reset)'{-r,--reset}'[remove all untracked files and exit]' \
+                      '(-u --untracked)'{-u,--untracked}'[display all untracked files and exit]' \
+                      '--pkg-name[package name of the created package]' \
+                      '--pkg-version[package version of the created package]' \
+                      '--pkg-build[package build number of the created package]' \
+        ;;
     (*)
         #_arguments -C $opts
         _path_files
