@@ -215,6 +215,17 @@ case $state in
     (init)
         _arguments -C $help_opts \
         ;;
+    (clean)
+        _arguments -C $help_opts \
+                      $json_opts \
+                      '(-y --yes)'{-y,--yes}'[do not ask for confirmation]' \
+                      '--dry-run[only display what would have been done]' \
+                      '(-i --index-cache)'{-i,--index-cache}'[remove index cache]' \
+                      '(-l --lock)'{-l,--lock}'[remove all conda lock files]' \
+                      '(-t --tarballs)'{-t,--tarballs}'[remove cached package tarballs]' \
+                      '(-p --packages)'{-p,--packages}'[remove unused cached packages]' \
+                      '(-s --source-cache)'{-s,--source-cache}'[remove files from the source cache of conda build]' \
+        ;;
     (*)
         #_arguments -C $opts
         _path_files
