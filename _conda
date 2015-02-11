@@ -170,6 +170,7 @@ case $state in
                       $install_opts \
                       $json_opts \
                       $channel_opts \
+                      '--unknown[use index metadata from the local package cache]' \
                       '--clone[path to (or name of) existing local environment]' \
                       '--no-default-packages[ignore create_default_packages in condarc file]' \
                       '*:packages:__conda_packages_search' \
@@ -191,6 +192,7 @@ case $state in
                       $install_opts \
                       $json_opts \
                       $channel_opts \
+                      '--unknown[use index metadata from the local package cache]' \
                       '--all[Update all installed packages in the environment]' \
                       '*:packages:__conda_packages_installed' \
         ;;
