@@ -229,7 +229,7 @@ case $state in
     (package)
         _arguments -C $help_opts \
                       $env_opts \
-                      '(-w --which)'{-w,--which}'[given some PATH print which conda package the file came from]' \
+                      '(-w --which)'{-w,--which}'[given some path print which conda package the file came from]' \
                       '(-L --ls-files)'{-L,--ls-files}'[list all files belonging to specified package]' \
                       '(-r --reset)'{-r,--reset}'[remove all untracked files and exit]' \
                       '(-u --untracked)'{-u,--untracked}'[display all untracked files and exit]' \
@@ -242,12 +242,12 @@ case $state in
                       $env_opts \
                       $json_opts \
                       '(-c --create)'{-c,--create}'[create bundle]' \
-                      '(-x --extract)'{-x,--extract}'[extact bundle located at PATH]:PATH:_path_files' \
-                      '--metadump[dump metadata of bundle at PATH]:PATH:_path_files' \
+                      '(-x --extract)'{-x,--extract}'[extact bundle located at path]:path:_path_files' \
+                      '--metadump[dump metadata of bundle at path]:path:_path_files' \
                       '(-q --quiet)'{-q,--quiet}'[do not display progress bar]'\
                       '--bundle-name[name of bundle]:NAME:' \
-                      '--data-path[path to data to be included in bundle]:PATH:_path_files' \
-                      '--extra-meta[path to json file with additional meta-data no]:PATH:_path_files' \
+                      '--data-path[path to data to be included in bundle]:path:_path_files' \
+                      '--extra-meta[path to json file with additional meta-data no]:path:_path_files' \
                       '--no-env[no environment]' \
         ;;
     (*)
