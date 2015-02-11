@@ -78,7 +78,7 @@ __conda_commands(){
 local -a opts
 opts=(
     '(-h --help)'{-h,--help}'[show this help message and exit]'
-    '(-v --version)'{-v,--version}'[show program''s version number and exit]'
+    '(-V --version)'{-V,--version}'[show program''s version number and exit]'
 )
 
 _arguments -C $opts \
