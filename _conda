@@ -84,6 +84,8 @@ _arguments -C $opts \
            ': :->command' \
            '*:: :->subcmd'
 
+
+
 base_opts=(
     '(-h --help)'{-h,--help}'[show the help message and exit]' \
     '(-n --name=)'{-n,--name=}'[name of environment]:environment:__conda_envs' \
@@ -115,11 +117,18 @@ case $state in
     ;;
 (subcmd)
     case ${line[1]} in
-    (install)
-        _arguments -C $base_opts \
-                      $install_opts \
-                      '--revision[revert to the specified revision]:revision' \
-                      '*:packages:__conda_packages_search' \
+    (info)
+        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+                      '--json[report all output as json.]' \
+                      '(-a --all)'{-a,--all}'[show all information, (environments, license, and system information]' \
+                      '(-e --envs)'{-e,--envs}'[list all known conda environments]' \
+                      '(-l --license)'{-l,--license}'[display information about local conda licenses list]' \
+                      '(-s --system)'{-s,--system}'[list environment variables]' \
+                      '--root[display root environment path]'
+        ;;
+    (help)
+        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
+                      '*:commands:__conda_commands' \
         ;;
     (list)
         _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
@@ -141,12 +150,6 @@ case $state in
                       '--spec[Treat regex argument as a package specification]' \
                       '*:regex:' \
         ;;
-    (update)
-        _arguments -C $base_opts \
-                      $install_opts \
-                      '--all[Update all installed packages in the environment]' \
-                      '*:packages:__conda_packages_installed' \
-        ;;
     (create)
         _arguments -C $base_opts \
                       $install_opts \
@@ -154,18 +157,17 @@ case $state in
                       '--no-default-packages[ignore create_default_packages in condarc file]' \
                       '*:packages:__conda_packages_search' \
         ;;
-    (help)
-        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
-                      '*:commands:__conda_commands' \
+    (install)
+        _arguments -C $base_opts \
+                      $install_opts \
+                      '--revision[revert to the specified revision]:revision' \
+                      '*:packages:__conda_packages_search' \
         ;;
-    (info)
-        _arguments -C '(-h --help)'{-h,--help}'[show the help message and exit]' \
-                      '--json[report all output as json.]' \
-                      '(-a --all)'{-a,--all}'[show all information, (environments, license, and system information]' \
-                      '(-e --envs)'{-e,--envs}'[list all known conda environments]' \
-                      '(-l --license)'{-l,--license}'[display information about local conda licenses list]' \
-                      '(-s --system)'{-s,--system}'[list environment variables]' \
-                      '--root[display root environment path]'
+    (update)
+        _arguments -C $base_opts \
+                      $install_opts \
+                      '--all[Update all installed packages in the environment]' \
+                      '*:packages:__conda_packages_installed' \
         ;;
     (*)
         #_arguments -C $opts
