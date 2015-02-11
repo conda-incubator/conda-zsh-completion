@@ -5,11 +5,9 @@ local state line context
 local -A opt_args
 
 __conda_envs(){
-
     local -a envs
     envs=($( conda info -e | sed "1,2d" | cut -f1 -d' '))
     _describe -t envs 'conda environments' envs
-
 }
 
 __conda_packages_installed(){
@@ -31,11 +29,9 @@ for k in parsed.keys():
 }
 
 __conda_channels(){
-
     local -a channels
     channels=(default system)
     _describe -t channels 'conda channels' channels
-
 }
 
 __conda_commands(){
