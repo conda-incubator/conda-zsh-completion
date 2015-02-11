@@ -18,6 +18,7 @@
 # TODO
 # ----
 #
+# * Subcommand grouping is still alpha.
 # * Completion for 'conda config' is somewhat incomplete
 #   * 'conda config --get' only completes a single option.
 #   * 'conda config --add' completes only the key, not the value.
