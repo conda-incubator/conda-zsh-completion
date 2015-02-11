@@ -305,10 +305,6 @@ case $state in
                       '--extra-meta[path to json file with additional meta-data no]:path:_path_files' \
                       '--no-env[no environment]' \
         ;;
-    (*)
-        #_arguments -C $opts
-        _path_files
-        ;;
     esac
     ;;
 esac
