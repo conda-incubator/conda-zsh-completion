@@ -1,5 +1,37 @@
 #compdef conda
 #description:conda package manager
+#
+# ZSH Completion for conda (http://conda.pydata.org/)
+#
+# Author: Valentin Haenel <valentin@haenel.co>  (https://github.com/esc/)
+# Licence: WTFPL (http://sam.zoy.org/wtfpl/)
+#
+# This completion depends on Python for a json parser, sorry. Unfortunately
+# there is no such thing in zsh (yet).
+#
+# To use this completion drop it somewhere in you $fpath, e.g.:
+#
+#     $ git clone $CLONEURL
+#     $ fpath+=$PWD/conda-zsh-completion
+#     $ compinit conda-zsh-completion
+#
+# TODO
+# ----
+#
+# * Completion for 'conda config' is somewhat incomplete
+#   * 'conda config --get' only completes a single option.
+#   * 'conda config --add' completes only the key, not the value.
+# * Completion for 'conda install' and others that query list of available or
+#   existing packages is slow, consider caching.
+# * Completion for version numbers is entirely missing:
+#   e.g. 'conda install numpy==<TAB>' should complete all available versions of
+#   numpy.
+# * Completion for 'conda remove' isn't aware of any environment given on the
+#   command line and so completion of existing packages may be incorrect if
+#   that option is given.
+# * Completion of channels is rudimentary, conda isn't queried for defined
+#   channels.
+# * Configuration for external commands is entirely missing.
 
 local state line context
 local -A opt_args
