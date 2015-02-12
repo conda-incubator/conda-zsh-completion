@@ -54,6 +54,7 @@
 # * Completion of channels is rudimentary, conda isn't queried for defined
 #   channels.
 # * Configuration for external commands, e.g. 'build' is entirely missing.
+# * Seperate boolean and list options for 'config'
 
 local state line context
 local -A opt_args
