@@ -24,6 +24,17 @@
 # To forcefully clean the completion cache, look in '~/.zcompcache' and remove
 # file starting with 'conda_'.
 #
+# CHANGELOG
+# ---------
+#
+# * v0.2
+#
+#   * completion cache for packages
+#
+# * v0.1
+#
+#   * inital release
+#
 # TODO
 # ----
 #
