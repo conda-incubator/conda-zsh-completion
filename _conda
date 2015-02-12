@@ -14,7 +14,7 @@
 #
 #     $ git clone $CLONEURL
 #     $ fpath+=$PWD/conda-zsh-completion
-#     $ compinit conda-zsh-completion
+#     $ compinit conda
 #
 # To activate the completion cache for packages, add the following to your
 # .zshrc:
