@@ -60,6 +60,7 @@
 #   channels.
 # * Configuration for external commands, e.g. 'build' is entirely missing.
 # * Seperate boolean and list options for 'config'
+# * Properly handle package specs on the command line
 
 local state line context
 local -A opt_args
