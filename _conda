@@ -30,6 +30,7 @@
 # * v0.2
 #
 #   * completion cache for packages
+#   * complete all channels defined in .condarc
 #
 # * v0.1
 #
@@ -93,7 +94,14 @@ for k in parsed.keys():
 
 __conda_channels(){
     local -a channels
-    channels=(default system)
+        channels=($(conda config --json --get channels|
+        python -c "
+import json, sys
+channels = json.load(sys.stdin)['get']['channels']
+for c in channels:
+    print(c)
+        "))
+    channels+=(system)
     _describe -t channels 'conda channels' channels
 }
 
