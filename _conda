@@ -117,25 +117,25 @@ __conda_channels(){
     _describe -t channels 'conda channels' channels
 }
 
+config_options=('channels'
+                'disallow'
+                'create_default_packages'
+                'track_features'
+                'envs_dirs'
+                'add_binstar_token'
+                'always_yes'
+                'allow_softlinks'
+                'changeps1'
+                'use_pip'
+                'offline'
+                'binstar_upload'
+                'binstar_personal'
+                'show_channel_urls'
+                'allow_other_channels'
+                'ssl_verify'
+                )
+
 __conda_config(){
-    local config_options
-    config_options=('channels'
-                    'disallow'
-                    'create_default_packages'
-                    'track_features'
-                    'envs_dirs'
-                    'add_binstar_token'
-                    'always_yes'
-                    'allow_softlinks'
-                    'changeps1'
-                    'use_pip'
-                    'offline'
-                    'binstar_upload'
-                    'binstar_personal'
-                    'show_channel_urls'
-                    'allow_other_channels'
-                    'ssl_verify'
-                    )
     _describe -t config_options 'conda configuration' config_options
 }
 
@@ -313,6 +313,13 @@ case $state in
                       '*:packages:__conda_packages_installed' \
         ;;
     (config)
+        # this allows completing multiple keys
+        last_item=$line[$CURRENT-1]
+        if [[ ${line[(r)--get]} == --get ]]  && [[ ${config_options[(r)$last_item]} == $last_item ]] ; then
+            get_opts=('*:keys:__conda_config')
+        else
+            get_opts=''
+        fi
         _arguments -C $help_opts \
                       $json_opts \
                       '--system[write to the system .condarc file]' \
@@ -323,6 +330,7 @@ case $state in
                       '(--get --add --set          --remove-key)--remove[remove a configuration value from a list key]:key:__conda_config:value' \
                       '(--get --add --set --remove             )--remove-key[remove a configuration key (and all its values)]:key:__conda_config' \
                       '(-f --force)'{-f,--force}'[write to the config file using the yaml parser]' \
+                      $get_opts
         ;;
     (init)
         _arguments -C $help_opts \
