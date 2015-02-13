@@ -97,15 +97,22 @@ for k in parsed.keys():
     _describe -t available_packages 'available packages' available_packages
 }
 
-__conda_channels(){
-    local -a channels
-        channels=($(conda config --json --get channels|
+__conda_config_values(){
+    local -a config_values search_term
+    search_term="$1"
+    config_values=($(conda config --json --get "$search_term"|
         python -c "
 import json, sys
-channels = json.load(sys.stdin)['get']['channels']
-for c in channels:
-    print(c)
+values = json.load(sys.stdin)['get']['$search_term']
+for v in values:
+    print(v)
         "))
+    print $config_values
+}
+
+__conda_channels(){
+    local -a channels
+    channels=$( __conda_config_values "channels" )
     channels+=(system)
     _describe -t channels 'conda channels' channels
 }
