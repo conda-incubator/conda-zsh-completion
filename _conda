@@ -349,7 +349,7 @@ case $state in
                       '*:packages:__conda_packages_installed' \
         ;;
     (config)
-        # this allows completing multiple keys
+        # this allows completing multiple keys whet --get is given
         local -a last_item get_opts
         last_item=$line[$CURRENT-1]
         if [[ ${line[(r)--get]} == --get ]]  && [[ ${config_options[(r)$last_item]} == $last_item ]] ; then
