@@ -171,7 +171,7 @@ __conda_describe_boolean_config_values(){
 
 __conda_channels(){
     local -a channels
-    channels=$( __conda_existing_config_values "channels" )
+    channels=($( __conda_existing_config_values "channels" ))
     channels+=(system)
     _describe -t channels 'conda channels' channels
 }
