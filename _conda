@@ -10,14 +10,14 @@
 # This completion depends on Python for a json parser, sorry. Unfortunately
 # there is no such thing in zsh (yet).
 #
-# To use this completion drop it somewhere in you $fpath, e.g.:
+# To use this completion drop it somewhere in you '$fpath', e.g.:
 #
 #     $ git clone $CLONEURL
 #     $ fpath+=$PWD/conda-zsh-completion
 #     $ compinit conda
 #
 # To activate the completion cache for packages, add the following to your
-# .zshrc:
+# '.zshrc':
 #
 #     zstyle ':completion::complete:*' use-cache 1
 #
@@ -29,7 +29,13 @@
 #
 # * v0.3
 #
-#   *
+#   * overhaul of the completion for config
+#
+#     * complete only existing keys
+#     * complete only existing values
+#     * differentiate between list and boolean config
+#     * reader and writer options mutually exclusive
+#     * complete multiple keys for --get
 #
 # * v0.2
 #
@@ -44,10 +50,6 @@
 # ----
 #
 # * Subcommand grouping is still alpha.
-# * Completion for 'conda config' is somewhat incomplete
-#   * 'conda config --get' only completes a single option.
-#   * 'conda config --add' completes only the key, not the value.
-#   * Similar issues for other options.
 # * Example of activating cache only for conda completion
 # * Make cache policy configurable
 # * Completion for version numbers is entirely missing:
@@ -59,7 +61,6 @@
 # * Completion of channels is rudimentary, conda isn't queried for defined
 #   channels.
 # * Configuration for external commands, e.g. 'build' is entirely missing.
-# * Seperate boolean and list options for 'config'
 # * Properly handle package specs on the command line
 
 local state line context
@@ -72,7 +73,7 @@ __conda_envs(){
 }
 
 __conda_packages_installed(){
-    zstyle ":completion:${curcontext}:" cache-policy _conda_caching_policy
+    zstyle ":completion:${curcontext}:" cache-policy __conda_caching_policy
     local -a installed_packages
     if _cache_invalid conda_installed_packages || ! _retrieve_cache conda_installed_packages ; then
         installed_packages=($(conda list | sed 1,2d | cut -f1 -d' '))
@@ -82,7 +83,7 @@ __conda_packages_installed(){
 }
 
 __conda_packages_search(){
-    zstyle ":completion:${curcontext}:" cache-policy _conda_caching_policy
+    zstyle ":completion:${curcontext}:" cache-policy __conda_caching_policy
     local -a available_packages
     if _cache_invalid conda_available_packages || ! _retrieve_cache conda_available_packages ; then
         available_packages=($(conda search --use-index-cache --json |
@@ -97,39 +98,120 @@ for k in parsed.keys():
     _describe -t available_packages 'available packages' available_packages
 }
 
-__conda_channels(){
-    local -a channels
-        channels=($(conda config --json --get channels|
+__conda_existing_config_keys(){
+    local -a config_keys
+    config_keys=($(conda config --json --get |
         python -c "
 import json, sys
-channels = json.load(sys.stdin)['get']['channels']
-for c in channels:
-    print(c)
+keys = json.load(sys.stdin)['get'].keys()
+for k in keys:
+    print(k)
         "))
+    print -l $config_keys
+}
+__conda_describe_existing_config_keys(){
+    local -a config_keys
+    config_keys=($( __conda_existing_config_keys ))
+    if [ "${#config_keys}" == 0 ] ; then
+        _message "no keys found!"
+    else
+        _describe -t config_keys 'existing configuration keys' config_keys
+    fi
+}
+
+__conda_describe_existing_list_config_keys(){
+    local -a config_keys existing_list_config_keys
+    config_keys=($( __conda_existing_config_keys ))
+    existing_list_config_keys=()
+    for k in $config_keys; do
+        if [[ ${__conda_list_config_keys[(r)$k]} == $k ]] ; then
+            existing_list_config_keys+=$k
+        fi
+    done
+    if [ "${#existing_list_config_keys}" == 0 ] ; then
+        _message "no keys found!"
+    else
+        _describe -t existing_list_config_keys 'existing list configuration keys' existing_list_config_keys
+    fi
+}
+
+__conda_existing_config_values(){
+    local -a config_values search_term
+    search_term="$1"
+    config_values=($(conda config --json --get "$search_term"|
+        python -c "
+import json, sys
+try:
+    values = json.load(sys.stdin)['get']['$search_term']
+    for v in values:
+        print(v)
+except KeyError:
+    pass
+        "))
+    print -l $config_values
+}
+
+__conda_describe_existing_config_values(){
+    local -a config_values search_term
+    search_term="$1"
+    config_values=($( __conda_existing_config_values $search_term ))
+    if [ "${#config_values}" == 0 ] ; then
+        _message "no values found for '$search_term'!"
+    else
+        _describe -t config_values 'configuration values' config_values
+    fi
+}
+
+__conda_describe_boolean_config_values(){
+    local -a config_values
+    config_values=(True False)
+    _describe -t config_values 'boolean configuration values' config_values
+
+}
+
+__conda_channels(){
+    local -a channels
+    channels=$( __conda_existing_config_values "channels" )
     channels+=(system)
     _describe -t channels 'conda channels' channels
 }
 
-__conda_config(){
-    local config_options
-    config_options=('channels'
-                    'disallow'
-                    'create_default_packages'
-                    'track_features'
-                    'envs_dirs'
-                    'add_binstar_token'
-                    'always_yes'
-                    'allow_softlinks'
-                    'changeps1'
-                    'use_pip'
-                    'offline'
-                    'binstar_upload'
-                    'binstar_personal'
-                    'show_channel_urls'
-                    'allow_other_channels'
-                    'ssl_verify'
-                    )
-    _describe -t config_options 'conda configuration' config_options
+local -a __conda_boolean_config_keys __conda_list_config_keys __conda_config_keys
+
+__conda_boolean_config_keys=(
+    'add_binstar_token'
+    'always_yes'
+    'allow_softlinks'
+    'changeps1'
+    'use_pip'
+    'offline'
+    'binstar_upload'
+    'binstar_personal'
+    'show_channel_urls'
+    'allow_other_channels'
+    'ssl_verify'
+    )
+
+__conda_list_config_keys=(
+    'channels'
+    'disallow'
+    'create_default_packages'
+    'track_features'
+    'envs_dirs'
+    )
+
+__conda_config_keys=($__conda_boolean_config_keys $__conda_list_config_keys)
+
+__conda_describe_boolean_config_keys(){
+    _describe -t __conda_boolean_config_keys 'boolean keys' __conda_boolean_config_keys
+}
+
+__conda_describe_list_config_keys(){
+    _describe -t __conda_list_config_keys 'list keys' __conda_list_config_keys
+}
+
+__conda_describe_config_keys(){
+    _describe -t __conda_config_keys 'conda configuration keys' __conda_config_keys
 }
 
 __conda_commands(){
@@ -169,21 +251,17 @@ __conda_commands(){
     _describe -t special_commands "special commands"  special
 }
 
-_conda_caching_policy() {
+__conda_caching_policy() {
   local -a oldp
   oldp=( "$1"(Nmh+12) ) # 12 hour
   (( $#oldp ))
 }
 
-local -a opts
+local -a opts help_opts json_opts env_opts channel_opts install_opts
 opts=(
     '(-h --help)'{-h,--help}'[show this help message and exit]'
     '(-V --version)'{-V,--version}'[show program''s version number and exit]'
 )
-
-_arguments -C $opts \
-           ': :->command' \
-           '*:: :->subcmd'
 
 help_opts=(
     '(-h --help)'{-h,--help}'[show the help message and exit]' \
@@ -218,6 +296,10 @@ install_opts=(
     '--copy[Install all packages using copies instead of hard- or soft-linking]' \
     '--alt-hint[Use an alternate algorithm to generate an unsatisfiable hint]' \
     )
+
+_arguments -C $opts \
+           ': :->command' \
+           '*:: :->subcmd'
 
 case $state in
 (command)
@@ -306,16 +388,25 @@ case $state in
                       '*:packages:__conda_packages_installed' \
         ;;
     (config)
+        # this allows completing multiple keys whet --get is given
+        local -a last_item get_opts
+        last_item=$line[$CURRENT-1]
+        if [[ ${line[(r)--get]} == --get ]]  && [[ ${__conda_config_keys[(r)$last_item]} == $last_item ]] ; then
+            get_opts=('*:keys:__conda_describe_config_keys')
+        else
+            get_opts=''
+        fi
         _arguments -C $help_opts \
                       $json_opts \
                       '--system[write to the system .condarc file]' \
                       '--file[write to the given file.]:file:_path_files' \
-                      '--get[get the configuration value]:key:__conda_config' \
-                      '--add[add one configuration value to a list key]:key:__conda_config' \
-                      '--set[set a boolean key]:key:__conda_config' \
-                      '--remove[remove a configuration value from a list key]:key:__conda_config' \
-                      '--remove-key[remove a configuration key (and all its values)]:key:__conda_config' \
+                      '(      --add --set --remove --remove-key)--get[get the configuration value]:key:__conda_describe_existing_config_keys' \
+                      '(--get       --set --remove --remove-key)--add[add one configuration value to a list key]:list key:__conda_describe_list_config_keys:value:' \
+                      '(--get --add       --remove --remove-key)--set[set a boolean key]:boolean key:__conda_describe_boolean_config_keys:value:__conda_describe_boolean_config_values' \
+                      '(--get --add --set          --remove-key)--remove[remove a configuration value from a list key]:list key:__conda_describe_existing_list_config_keys:value:{__conda_describe_existing_config_values '$last_item'}' \
+                      '(--get --add --set --remove             )--remove-key[remove a configuration key (and all its values)]:key:__conda_describe_existing_config_keys' \
                       '(-f --force)'{-f,--force}'[write to the config file using the yaml parser]' \
+                      $get_opts
         ;;
     (init)
         _arguments -C $help_opts \
