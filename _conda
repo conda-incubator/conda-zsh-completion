@@ -174,7 +174,6 @@ __conda_describe_boolean_config_values(){
     local -a config_values
     config_values=(True False)
     _describe -t config_values 'boolean configuration values' config_values
-
 }
 
 __conda_channels(){
