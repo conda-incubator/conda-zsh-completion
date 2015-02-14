@@ -97,6 +97,43 @@ for k in parsed.keys():
     _describe -t available_packages 'available packages' available_packages
 }
 
+__conda_existing_config_keys(){
+    local -a config_keys
+    config_keys=($(conda config --json --get |
+        python -c "
+import json, sys
+keys = json.load(sys.stdin)['get'].keys()
+for k in keys:
+    print(k)
+        "))
+    print -l $config_keys
+}
+__conda_describe_existing_config_keys(){
+    local -a config_keys
+    config_keys=($( __conda_existing_config_keys ))
+    if [ "${#config_keys}" == 0 ] ; then
+        _message "no keys found!"
+    else
+        _describe -t config_keys 'existing configuration keys' config_keys
+    fi
+}
+
+__conda_describe_existing_list_config_keys(){
+    local -a config_keys existing_list_config_keys
+    config_keys=($( __conda_existing_config_keys ))
+    existing_list_config_keys=()
+    for k in $config_keys; do
+        if [[ ${__conda_list_config_keys[(r)$k]} == $k ]] ; then
+            existing_list_config_keys+=$k
+        fi
+    done
+    if [ "${#existing_list_config_keys}" == 0 ] ; then
+        _message "no keys found!"
+    else
+        _describe -t existing_list_config_keys 'existing list configuration keys' existing_list_config_keys
+    fi
+}
+
 __conda_existing_config_values(){
     local -a config_values search_term
     search_term="$1"
@@ -362,11 +399,11 @@ case $state in
                       $json_opts \
                       '--system[write to the system .condarc file]' \
                       '--file[write to the given file.]:file:_path_files' \
-                      '(      --add --set --remove --remove-key)--get[get the configuration value]:key:__conda_describe_config_keys' \
+                      '(      --add --set --remove --remove-key)--get[get the configuration value]:key:__conda_describe_existing_config_keys' \
                       '(--get       --set --remove --remove-key)--add[add one configuration value to a list key]:list key:__conda_describe_list_config_keys:value:' \
                       '(--get --add       --remove --remove-key)--set[set a boolean key]:boolean key:__conda_describe_boolean_config_keys:value:__conda_describe_boolean_config_values' \
-                      '(--get --add --set          --remove-key)--remove[remove a configuration value from a list key]:list key:__conda_describe_list_config_keys:value:{__conda_describe_existing_config_values '$last_item'}' \
-                      '(--get --add --set --remove             )--remove-key[remove a configuration key (and all its values)]:key:__conda_describe_config_keys' \
+                      '(--get --add --set          --remove-key)--remove[remove a configuration value from a list key]:list key:__conda_describe_existing_list_config_keys:value:{__conda_describe_existing_config_values '$last_item'}' \
+                      '(--get --add --set --remove             )--remove-key[remove a configuration key (and all its values)]:key:__conda_describe_existing_config_keys' \
                       '(-f --force)'{-f,--force}'[write to the config file using the yaml parser]' \
                       $get_opts
         ;;
