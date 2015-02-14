@@ -115,6 +115,7 @@ for k in keys:
         "))
     print -l $config_keys
 }
+
 __conda_describe_existing_config_keys(){
     local -a config_keys
     config_keys=($( __conda_existing_config_keys ))
@@ -264,6 +265,7 @@ __conda_caching_policy() {
 }
 
 local -a opts help_opts json_opts env_opts channel_opts install_opts
+
 opts=(
     '(-h --help)'{-h,--help}'[show this help message and exit]'
     '(-V --version)'{-V,--version}'[show program''s version number and exit]'
