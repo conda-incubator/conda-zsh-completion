@@ -6,6 +6,7 @@
 # Author: Valentin Haenel <valentin@haenel.co>  (https://github.com/esc/)
 # Licence: WTFPL (http://sam.zoy.org/wtfpl/)
 # Version: 0.3-dev
+# Homepage: https://github.com/esc/conda-zsh-completion
 #
 # This completion depends on Python for a json parser, sorry. Unfortunately
 # there is no such thing in zsh (yet).
@@ -23,6 +24,9 @@
 #
 # To forcefully clean the completion cache, look in '~/.zcompcache' and remove
 # file starting with 'conda_'.
+#
+# Please report any issues at:
+# https://github.com/esc/conda-zsh-completion/issues
 #
 # CHANGELOG
 # ---------
