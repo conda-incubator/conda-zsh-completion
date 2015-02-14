@@ -343,6 +343,7 @@ case $state in
         ;;
     (config)
         # this allows completing multiple keys
+        local -a last_item get_opts
         last_item=$line[$CURRENT-1]
         if [[ ${line[(r)--get]} == --get ]]  && [[ ${config_options[(r)$last_item]} == $last_item ]] ; then
             get_opts=('*:keys:__conda_config')
