@@ -124,6 +124,13 @@ __conda_config_values_describe(){
     fi
 }
 
+__conda_boolean_config_value(){
+    local -a config_values
+    config_values=(True False)
+    _describe -t config_values 'boolean configuration values' config_values
+
+}
+
 __conda_channels(){
     local -a channels
     channels=$( __conda_config_values "channels" )
@@ -356,7 +363,7 @@ case $state in
                       '--file[write to the given file.]:file:_path_files' \
                       '(      --add --set --remove --remove-key)--get[get the configuration value]:key:__conda_config' \
                       '(--get       --set --remove --remove-key)--add[add one configuration value to a list key]:key:__list_conda_config:value:' \
-                      '(--get --add       --remove --remove-key)--set[set a boolean key]:key:__boolean_conda_config:value:' \
+                      '(--get --add       --remove --remove-key)--set[set a boolean key]:key:__boolean_conda_config:value:__conda_boolean_config_value' \
                       '(--get --add --set          --remove-key)--remove[remove a configuration value from a list key]:key:__conda_config:value:{__conda_config_values_describe '$last_item'}' \
                       '(--get --add --set --remove             )--remove-key[remove a configuration key (and all its values)]:key:__conda_config' \
                       '(-f --force)'{-f,--force}'[write to the config file using the yaml parser]' \
