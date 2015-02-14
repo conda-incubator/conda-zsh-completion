@@ -138,6 +138,8 @@ __conda_channels(){
     _describe -t channels 'conda channels' channels
 }
 
+local -a __conda_boolean_config_keys __conda_list_config_keys __conda_config_keys
+
 __conda_boolean_config_keys=(
     'add_binstar_token'
     'always_yes'
@@ -217,15 +219,11 @@ _conda_caching_policy() {
   (( $#oldp ))
 }
 
-local -a opts
+local -a opts help_opts json_opts env_opts channel_opts install_opts
 opts=(
     '(-h --help)'{-h,--help}'[show this help message and exit]'
     '(-V --version)'{-V,--version}'[show program''s version number and exit]'
 )
-
-_arguments -C $opts \
-           ': :->command' \
-           '*:: :->subcmd'
 
 help_opts=(
     '(-h --help)'{-h,--help}'[show the help message and exit]' \
@@ -260,6 +258,10 @@ install_opts=(
     '--copy[Install all packages using copies instead of hard- or soft-linking]' \
     '--alt-hint[Use an alternate algorithm to generate an unsatisfiable hint]' \
     )
+
+_arguments -C $opts \
+           ': :->command' \
+           '*:: :->subcmd'
 
 case $state in
 (command)
