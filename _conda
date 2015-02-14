@@ -64,8 +64,6 @@
 # * Completion for 'conda remove' isn't aware of any environment given on the
 #   command line and so completion of existing packages may be incorrect if
 #   that option is given.
-# * Completion of channels is rudimentary, conda isn't queried for defined
-#   channels.
 # * Configuration for external commands, e.g. 'build' is entirely missing.
 # * Properly handle package specs on the command line
 
