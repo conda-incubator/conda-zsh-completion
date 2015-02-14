@@ -72,7 +72,7 @@ __conda_envs(){
 }
 
 __conda_packages_installed(){
-    zstyle ":completion:${curcontext}:" cache-policy _conda_caching_policy
+    zstyle ":completion:${curcontext}:" cache-policy __conda_caching_policy
     local -a installed_packages
     if _cache_invalid conda_installed_packages || ! _retrieve_cache conda_installed_packages ; then
         installed_packages=($(conda list | sed 1,2d | cut -f1 -d' '))
@@ -82,7 +82,7 @@ __conda_packages_installed(){
 }
 
 __conda_packages_search(){
-    zstyle ":completion:${curcontext}:" cache-policy _conda_caching_policy
+    zstyle ":completion:${curcontext}:" cache-policy __conda_caching_policy
     local -a available_packages
     if _cache_invalid conda_available_packages || ! _retrieve_cache conda_available_packages ; then
         available_packages=($(conda search --use-index-cache --json |
@@ -213,7 +213,7 @@ __conda_commands(){
     _describe -t special_commands "special commands"  special
 }
 
-_conda_caching_policy() {
+__conda_caching_policy() {
   local -a oldp
   oldp=( "$1"(Nmh+12) ) # 12 hour
   (( $#oldp ))
