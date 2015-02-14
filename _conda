@@ -37,6 +37,8 @@
 #     * reader and writer options mutually exclusive
 #     * complete multiple keys for --get
 #
+#   * -n,--name and -p,--prefix are now mutually exclusive
+#
 # * v0.2
 #
 #   * completion cache for packages
@@ -272,8 +274,8 @@ json_opts=(
     )
 
 env_opts=(
-    '(-n --name)'{-n,--name}'[name of environment]:environment:__conda_envs' \
-    '(-p --prefix)'{-p,--prefix}'[full path to environment prefix]:path:_path_files' \
+    '(-n --name -p --prefix)'{-n,--name}'[name of environment]:environment:__conda_envs' \
+    '(-n --name -p --prefix)'{-p,--prefix}'[full path to environment prefix]:path:_path_files' \
     )
 
 channel_opts=(
