@@ -97,7 +97,7 @@ for k in parsed.keys():
     _describe -t available_packages 'available packages' available_packages
 }
 
-__conda_config_values(){
+__conda_existing_config_values(){
     local -a config_values search_term
     search_term="$1"
     config_values=($(conda config --json --get "$search_term"|
@@ -113,10 +113,10 @@ except KeyError:
     print -l $config_values
 }
 
-__conda_config_values_describe(){
+__conda_describe_existing_config_values(){
     local -a config_values search_term
     search_term="$1"
-    config_values=($( __conda_config_values $search_term ))
+    config_values=($( __conda_existing_config_values $search_term ))
     if [ "${#config_values}" == 0 ] ; then
         _message "no values found for '$search_term'!"
     else
@@ -124,7 +124,7 @@ __conda_config_values_describe(){
     fi
 }
 
-__conda_boolean_config_value(){
+__conda_describe_boolean_config_values(){
     local -a config_values
     config_values=(True False)
     _describe -t config_values 'boolean configuration values' config_values
@@ -133,12 +133,12 @@ __conda_boolean_config_value(){
 
 __conda_channels(){
     local -a channels
-    channels=$( __conda_config_values "channels" )
+    channels=$( __conda_existing_config_values "channels" )
     channels+=(system)
     _describe -t channels 'conda channels' channels
 }
 
-boolean_config_options=(
+__conda_boolean_config_keys=(
     'add_binstar_token'
     'always_yes'
     'allow_softlinks'
@@ -152,7 +152,7 @@ boolean_config_options=(
     'ssl_verify'
     )
 
-list_config_options=(
+__conda_list_config_keys=(
     'channels'
     'disallow'
     'create_default_packages'
@@ -160,20 +160,19 @@ list_config_options=(
     'envs_dirs'
     )
 
-__boolean_conda_config(){
-    _describe -t boolean_config_options 'boolean keys' boolean_config_options
+__conda_config_keys=($__conda_boolean_config_keys $__conda_list_config_keys)
+
+__conda_describe_boolean_config_keys(){
+    _describe -t __conda_boolean_config_keys 'boolean keys' __conda_boolean_config_keys
 }
 
-__list_conda_config(){
-    _describe -t list_config_options 'list keys' list_config_options
+__conda_describe_list_config_keys(){
+    _describe -t __conda_list_config_keys 'list keys' __conda_list_config_keys
 }
 
-config_options=($boolean_config_options $list_config_options)
-
-__conda_config(){
-    _describe -t config_options 'conda configuration keys' config_options
+__conda_describe_config_keys(){
+    _describe -t __conda_config_keys 'conda configuration keys' __conda_config_keys
 }
-
 
 __conda_commands(){
     local -a package maint environment help config special
@@ -352,8 +351,8 @@ case $state in
         # this allows completing multiple keys whet --get is given
         local -a last_item get_opts
         last_item=$line[$CURRENT-1]
-        if [[ ${line[(r)--get]} == --get ]]  && [[ ${config_options[(r)$last_item]} == $last_item ]] ; then
-            get_opts=('*:keys:__conda_config')
+        if [[ ${line[(r)--get]} == --get ]]  && [[ ${__conda_config_keys[(r)$last_item]} == $last_item ]] ; then
+            get_opts=('*:keys:__conda_describe_config_keys')
         else
             get_opts=''
         fi
@@ -361,11 +360,11 @@ case $state in
                       $json_opts \
                       '--system[write to the system .condarc file]' \
                       '--file[write to the given file.]:file:_path_files' \
-                      '(      --add --set --remove --remove-key)--get[get the configuration value]:key:__conda_config' \
-                      '(--get       --set --remove --remove-key)--add[add one configuration value to a list key]:list key:__list_conda_config:value:' \
-                      '(--get --add       --remove --remove-key)--set[set a boolean key]:boolean key:__boolean_conda_config:value:__conda_boolean_config_value' \
-                      '(--get --add --set          --remove-key)--remove[remove a configuration value from a list key]:list key:__list_conda_config:value:{__conda_config_values_describe '$last_item'}' \
-                      '(--get --add --set --remove             )--remove-key[remove a configuration key (and all its values)]:key:__conda_config' \
+                      '(      --add --set --remove --remove-key)--get[get the configuration value]:key:__conda_describe_config_keys' \
+                      '(--get       --set --remove --remove-key)--add[add one configuration value to a list key]:list key:__conda_describe_list_config_keys:value:' \
+                      '(--get --add       --remove --remove-key)--set[set a boolean key]:boolean key:__conda_describe_boolean_config_keys:value:__conda_describe_boolean_config_values' \
+                      '(--get --add --set          --remove-key)--remove[remove a configuration value from a list key]:list key:__conda_describe_list_config_keys:value:{__conda_describe_existing_config_values '$last_item'}' \
+                      '(--get --add --set --remove             )--remove-key[remove a configuration key (and all its values)]:key:__conda_describe_config_keys' \
                       '(-f --force)'{-f,--force}'[write to the config file using the yaml parser]' \
                       $get_opts
         ;;
