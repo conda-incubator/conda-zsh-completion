@@ -85,7 +85,7 @@ __conda_packages_installed(){
     [[ -n "$1" ]] && option="$1"
     [[ -n "$2" ]] && environment="$2"
     installed_packages=($( conda list $option $environment | sed 1,2d | cut -f1 -d' '))
-    [[ -n $options ]] && [[ -n $environment ]] && additional_message=" in environment: '$environment'"
+    [[ -n $option ]] && [[ -n $environment ]] && additional_message=" in environment: '$environment'"
     _describe -t installed_packages 'installed packages'$additional_message installed_packages
 }
 
