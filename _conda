@@ -81,9 +81,14 @@ __conda_envs(){
 }
 
 __conda_packages_installed(){
-    local -a installed_packages
-    installed_packages=($(conda list | sed 1,2d | cut -f1 -d' '))
-    _describe -t installed_packages 'installed packages' installed_packages
+    local -a installed_packages option environment additional_message
+
+    # check for command line overrides
+    [[ -n "$1" ]] && option="$1"
+    [[ -n "$2" ]] && environment="$2"
+    installed_packages=($( conda list $option $environment | sed 1,2d | cut -f1 -d' '))
+    [[ -n $options ]] && [[ -n $environment ]] && additional_message=" in environment: '$environment'"
+    _describe -t installed_packages 'installed packages'$additional_message installed_packages
 }
 __conda_package_available(){
     zstyle ":completion:${curcontext}:" cache-policy __conda_caching_policy
@@ -420,6 +425,12 @@ case $state in
                       '*:packages:__conda_packages_installed' \
         ;;
     (remove|uninstall)
+        local -a environment options specifier
+        options=('-n' '--name' '-p' '--prefix')
+        for i in $options ; do
+            (( ${line[(I)$i]} )) && specifier=$i
+        done
+        [[ -n $specifier ]] && environment="$line[${line[(i)$specifier]}+1]"
         _arguments -C $help_opts \
                       $env_opts \
                       $json_opts \
@@ -431,7 +442,7 @@ case $state in
                       '--no-pin[ignore pinned file]' \
                       '(-q --quiet)'{-q,--quiet}'[do not display progress bar]'\
                       '--offline[offline mode, don''t connect to internet]' \
-                      '*:packages:__conda_packages_installed' \
+                      '*:packages:{__conda_packages_installed $specifier $environment}' \
         ;;
     (config)
         # this allows completing multiple keys whet --get is given
