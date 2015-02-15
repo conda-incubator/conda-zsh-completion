@@ -34,6 +34,8 @@
 #
 #   * conda info can complete available packages
 #   * conda install has rudimentary package version completion
+#   * conda remove is aware of -n or similar and completes only packages
+#     in the given environment
 #
 # * v0.3
 #
@@ -64,9 +66,6 @@
 # * Make cache policy configurable
 # * Completion for version numbers is rudimentary:
 #   only 'install' can complete them and only for a single '=' sign
-# * Completion for 'conda remove' isn't aware of any environment given on the
-#   command line and so completion of existing packages may be incorrect if
-#   that option is given.
 # * Configuration for external commands, e.g. 'build' is entirely missing.
 # * Properly handle package specs on the command line
 # * Don't continue to complete options once -- is given
