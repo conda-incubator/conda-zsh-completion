@@ -228,6 +228,25 @@ __conda_describe_config_keys(){
     _describe -t __conda_config_keys 'conda configuration keys' __conda_config_keys
 }
 
+#__conda_package_specs=('<'  '>' '<=' '>=' '==' '!=')
+__conda_package_specs=('=')
+
+__conda_describe_package_specs(){
+    _describe -t __conda_package_specs 'conda package specs' __conda_package_specs
+}
+
+__conda_describe_package_version(){
+    local -a current_package versions
+    current_package="$1"
+    versions=($( conda search --json --use-index-cache $current_package | python -c "
+import json,sys
+versions = set((e['version'] for e in json.load(sys.stdin)['$current_package']))
+for v in versions:
+    print(v)
+    "))
+    _describe -t versions $current_package' version' versions
+}
+
 __conda_commands(){
     local -a package maint environment help config special
     package=(
@@ -371,13 +390,28 @@ case $state in
                       '*:packages:__describe_conda_package_available' \
         ;;
     (install)
-        _arguments -C $help_opts \
-                      $env_opts \
-                      $install_opts \
-                      $json_opts \
-                      $channel_opts \
-                      '--revision[revert to the specified revision]:revision' \
-                      '*:packages:__describe_conda_package_available' \
+        local -a last_item available_packages current_package
+        last_item=$line[$CURRENT]
+        available_packages=($( __conda_package_available ))
+        if [[ $last_item == '-' ]] || [[ $last_item == '--' ]] ; then
+            _arguments -C $help_opts \
+                        $env_opts \
+                        $install_opts \
+                        $json_opts \
+                        $channel_opts \
+                        '--revision[revert to the specified revision]:revision'
+        else
+            if compset -P "*=" ; then
+                current_package="$IPREFIX[1,-2]"
+                __conda_describe_package_version $current_package
+            else
+                __describe_conda_package_available
+                if [[ -n $last_item ]] && [[ ${available_packages[(r)$last_item]} == $last_item ]]; then
+                    compset -P '*'
+                    __conda_describe_package_specs
+                fi
+            fi
+        fi
         ;;
     (update)
         _arguments -C $help_opts \
