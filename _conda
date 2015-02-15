@@ -417,6 +417,12 @@ case $state in
         fi
         ;;
     (update)
+        local -a environment options specifier
+        options=('-n' '--name' '-p' '--prefix')
+        for i in $options ; do
+            (( ${line[(I)$i]} )) && specifier=$i
+        done
+        [[ -n $specifier ]] && environment="$line[${line[(i)$specifier]}+1]"
         _arguments -C $help_opts \
                       $env_opts \
                       $install_opts \
@@ -424,7 +430,7 @@ case $state in
                       $channel_opts \
                       '--unknown[use index metadata from the local package cache]' \
                       '--all[Update all installed packages in the environment]' \
-                      '*:packages:__conda_packages_installed' \
+                      '*:packages:{__conda_packages_installed $specifier $environment}' \
         ;;
     (remove|uninstall)
         local -a environment options specifier
