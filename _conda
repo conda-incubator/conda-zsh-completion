@@ -34,8 +34,8 @@
 #
 #   * conda info can complete available packages
 #   * conda install has rudimentary package version completion
-#   * conda remove is aware of -n or similar and completes only packages
-#     in the given environment
+#   * conda remove and update are aware of -n or similar and complete only
+#     packages in the given environment
 #
 # * v0.3
 #
