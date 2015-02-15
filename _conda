@@ -139,7 +139,7 @@ __conda_describe_existing_list_config_keys(){
     config_keys=($( __conda_existing_config_keys ))
     existing_list_config_keys=()
     for k in $config_keys; do
-        if [[ ${__conda_list_config_keys[(r)$k]} == $k ]] ; then
+        if (( ${__conda_list_config_keys[(I)$k]} )) ; then
             existing_list_config_keys+=$k
         fi
     done
@@ -406,7 +406,7 @@ case $state in
                 __conda_describe_package_version $current_package
             else
                 __describe_conda_package_available
-                if [[ -n $last_item ]] && [[ ${available_packages[(r)$last_item]} == $last_item ]]; then
+                if [[ -n $last_item ]] && (( ${available_packages[(I)$last_item]} )); then
                     compset -P '*'
                     __conda_describe_package_specs
                 fi
@@ -447,7 +447,7 @@ case $state in
         # this allows completing multiple keys whet --get is given
         local -a last_item get_opts
         last_item=$line[$CURRENT-1]
-        if [[ ${line[(r)--get]} == --get ]]  && [[ ${__conda_config_keys[(r)$last_item]} == $last_item ]] ; then
+        if (( ${line[(I)--get]} ))  && (( ${__conda_config_keys[(I)$last_item]} )) ; then
             get_opts=('*:keys:__conda_describe_config_keys')
         else
             get_opts=''
