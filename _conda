@@ -33,6 +33,7 @@
 # * v0.4
 #
 #   * conda info can complete available packages
+#   * conda install has rudimentary package version completion
 #
 # * v0.3
 #
@@ -61,9 +62,8 @@
 # * Subcommand grouping is still alpha.
 # * Example of activating cache only for conda completion
 # * Make cache policy configurable
-# * Completion for version numbers is entirely missing:
-#   e.g. 'conda install numpy==<TAB>' should complete all available versions of
-#   numpy.
+# * Completion for version numbers is rudimentary:
+#   only 'install' can complete them and only for a single '=' sign
 # * Completion for 'conda remove' isn't aware of any environment given on the
 #   command line and so completion of existing packages may be incorrect if
 #   that option is given.
