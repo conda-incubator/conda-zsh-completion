@@ -81,7 +81,6 @@ __conda_envs(){
 
 __conda_packages_installed(){
     local -a installed_packages option environment additional_message
-
     # check for command line overrides
     [[ -n "$1" ]] && option="$1"
     [[ -n "$2" ]] && environment="$2"
@@ -89,6 +88,7 @@ __conda_packages_installed(){
     [[ -n $options ]] && [[ -n $environment ]] && additional_message=" in environment: '$environment'"
     _describe -t installed_packages 'installed packages'$additional_message installed_packages
 }
+
 __conda_package_available(){
     zstyle ":completion:${curcontext}:" cache-policy __conda_caching_policy
     local -a available_packages
