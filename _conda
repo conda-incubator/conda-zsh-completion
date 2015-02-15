@@ -89,8 +89,7 @@ __conda_packages_installed(){
     fi
     _describe -t installed_packages 'installed packages' installed_packages
 }
-
-__conda_packages_search(){
+__conda_package_available(){
     zstyle ":completion:${curcontext}:" cache-policy __conda_caching_policy
     local -a available_packages
     if _cache_invalid conda_available_packages || ! _retrieve_cache conda_available_packages ; then
@@ -103,6 +102,13 @@ for k in parsed.keys():
         "))
         _store_cache conda_available_packages available_packages
     fi
+    print -l $available_packages
+
+}
+
+__describe_conda_package_available(){
+    local -a available_packages
+    available_packages=($( __conda_package_available))
     _describe -t available_packages 'available packages' available_packages
 }
 
@@ -324,7 +330,7 @@ case $state in
                       '(-l --license)'{-l,--license}'[display information about local conda licenses list]' \
                       '(-s --system)'{-s,--system}'[list environment variables]' \
                       '--root[display root environment path]' \
-                      '*:packages:__conda_packages_search' \
+                      '*:packages:__describe_conda_package_available' \
         ;;
     (help)
         _arguments -C $help_opts \
@@ -362,7 +368,7 @@ case $state in
                       '--unknown[use index metadata from the local package cache]' \
                       '--clone[path to (or name of) existing local environment]' \
                       '--no-default-packages[ignore create_default_packages in condarc file]' \
-                      '*:packages:__conda_packages_search' \
+                      '*:packages:__describe_conda_package_available' \
         ;;
     (install)
         _arguments -C $help_opts \
@@ -371,7 +377,7 @@ case $state in
                       $json_opts \
                       $channel_opts \
                       '--revision[revert to the specified revision]:revision' \
-                      '*:packages:__conda_packages_search' \
+                      '*:packages:__describe_conda_package_available' \
         ;;
     (update)
         _arguments -C $help_opts \
