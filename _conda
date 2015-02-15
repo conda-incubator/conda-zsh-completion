@@ -393,7 +393,7 @@ case $state in
         local -a last_item available_packages current_package
         last_item=$line[$CURRENT]
         available_packages=($( __conda_package_available ))
-        if [[ $last_item == '-' ]] || [[ $last_item == '--' ]] ; then
+        if [[ $last_item[1] == '-' ]] || [[ $last_item[1,2] == '--' ]] ; then
             _arguments -C $help_opts \
                         $env_opts \
                         $install_opts \
