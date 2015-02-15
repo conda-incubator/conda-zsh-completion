@@ -81,12 +81,8 @@ __conda_envs(){
 }
 
 __conda_packages_installed(){
-    zstyle ":completion:${curcontext}:" cache-policy __conda_caching_policy
     local -a installed_packages
-    if _cache_invalid conda_installed_packages || ! _retrieve_cache conda_installed_packages ; then
-        installed_packages=($(conda list | sed 1,2d | cut -f1 -d' '))
-        _store_cache conda_installed_packages installed_packages
-    fi
+    installed_packages=($(conda list | sed 1,2d | cut -f1 -d' '))
     _describe -t installed_packages 'installed packages' installed_packages
 }
 __conda_package_available(){
