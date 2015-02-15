@@ -70,6 +70,8 @@
 # * Properly handle package specs on the command line
 # * Don't continue to complete options once -- is given
 # * None of the commands are aware of channels
+# * Conda update completes existing packages also installed via pip.
+#   These can not be updated using conda..
 
 local state line context
 local -A opt_args
