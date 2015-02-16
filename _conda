@@ -412,7 +412,7 @@ case $state in
                       '--unknown[use index metadata from the local package cache]' \
                       '--clone[path to (or name of) existing local environment]' \
                       '--no-default-packages[ignore create_default_packages in condarc file]' \
-                      '*:packages:__describe_conda_package_available' \
+                      '*:packages:__magic' \
         ;;
     (install)
         _arguments -C $help_opts \
