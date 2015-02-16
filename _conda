@@ -243,11 +243,14 @@ __conda_describe_package_version(){
     current_package="$1"
     versions=($( conda search --json --use-index-cache $current_package | python -c "
 import json,sys
-versions = set((e['version'] for e in json.load(sys.stdin)['$current_package']))
-for v in versions:
-    print(v)
+try:
+    versions = set((e['version'] for e in json.load(sys.stdin)['$current_package']))
+    for v in versions:
+        print(v)
+except KeyError:
+    pass
     "))
-    _describe -t versions $current_package' version' versions
+    _describe -t versions "$current_package version" versions
 }
 
 __conda_commands(){
