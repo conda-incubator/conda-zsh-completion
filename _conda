@@ -156,7 +156,7 @@ __conda_describe_existing_list_config_keys(){
 __conda_existing_config_values(){
     local -a config_values search_term
     search_term="$1"
-    config_values=($(conda config --json --get "$search_term"|
+    config_values=($(conda config --json --get "$search_term" 2> /dev/null |
         python -c "
 import json, sys
 try:
@@ -164,6 +164,8 @@ try:
     for v in values:
         print(v)
 except KeyError:
+    pass
+except ValueError:
     pass
         "))
     print -l $config_values
