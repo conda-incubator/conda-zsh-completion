@@ -7,6 +7,7 @@
 # Licence: WTFPL (http://sam.zoy.org/wtfpl/)
 # Version: 0.4-dev
 # Homepage: https://github.com/esc/conda-zsh-completion
+# Demo: https://asciinema.org/a/16516
 #
 # This completion depends on Python for a json parser, sorry. Unfortunately
 # there is no such thing in zsh (yet).
