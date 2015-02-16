@@ -5,7 +5,7 @@
 #
 # Author: Valentin Haenel <valentin@haenel.co>  (https://github.com/esc/)
 # Licence: WTFPL (http://sam.zoy.org/wtfpl/)
-# Version: 0.4
+# Version: 0.5-dev
 # Homepage: https://github.com/esc/conda-zsh-completion
 # Demo: https://asciinema.org/a/16516
 #
@@ -31,6 +31,11 @@
 #
 # CHANGELOG
 # ---------
+#
+# * v0.5
+#
+#   *
+#
 # * v0.4
 #
 #   * conda info can complete available packages
