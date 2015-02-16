@@ -343,6 +343,23 @@ _arguments -C $opts \
            ': :->command' \
            '*:: :->subcmd'
 
+# the magic function, complete either a package or a package and it's version
+__magic(){
+    local -a last_item available_packages current_package
+    last_item=$line[$CURRENT]
+    available_packages=($( __conda_package_available ))
+    if compset -P "*=" ; then
+        current_package="$IPREFIX[1,-2]"
+        __conda_describe_package_version $current_package
+    else
+        __describe_conda_package_available
+        if [[ -n $last_item ]] && (( ${available_packages[(I)$last_item]} )); then
+            compset -P '*'
+            __conda_describe_package_specs
+        fi
+    fi
+}
+
 case $state in
 (command)
     __conda_commands
@@ -398,28 +415,13 @@ case $state in
                       '*:packages:__describe_conda_package_available' \
         ;;
     (install)
-        local -a last_item available_packages current_package
-        last_item=$line[$CURRENT]
-        available_packages=($( __conda_package_available ))
-        if [[ $last_item[1] == '-' ]] || [[ $last_item[1,2] == '--' ]] ; then
-            _arguments -C $help_opts \
-                        $env_opts \
-                        $install_opts \
-                        $json_opts \
-                        $channel_opts \
-                        '--revision[revert to the specified revision]:revision'
-        else
-            if compset -P "*=" ; then
-                current_package="$IPREFIX[1,-2]"
-                __conda_describe_package_version $current_package
-            else
-                __describe_conda_package_available
-                if [[ -n $last_item ]] && (( ${available_packages[(I)$last_item]} )); then
-                    compset -P '*'
-                    __conda_describe_package_specs
-                fi
-            fi
-        fi
+        _arguments -C $help_opts \
+                    $env_opts \
+                    $install_opts \
+                    $json_opts \
+                    $channel_opts \
+                    '--revision[revert to the specified revision]:revision' \
+                    '*:packages:__magic' \
         ;;
     (update)
         local -a environment options specifier
