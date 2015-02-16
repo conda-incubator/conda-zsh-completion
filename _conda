@@ -460,7 +460,7 @@ case $state in
         local -a last_item get_opts
         last_item=$line[$CURRENT-1]
         if (( ${line[(I)--get]} ))  && (( ${__conda_config_keys[(I)$last_item]} )) ; then
-            get_opts=('*:keys:__conda_describe_config_keys')
+            get_opts=('*:keys:__conda_describe_existing_config_keys')
         else
             get_opts=''
         fi
