@@ -33,9 +33,11 @@
 # * v0.4
 #
 #   * conda info can complete available packages
-#   * conda install has rudimentary package version completion
+#   * conda install and create have rudimentary package version completion
+#   * remove caching for local package list, it's fast enough
 #   * conda remove and update are aware of -n or similar and complete only
 #     packages in the given environment
+#   * list of packages excludes those installed with pip
 #
 # * v0.3
 #
