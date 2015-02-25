@@ -292,12 +292,16 @@ __conda_commands(){
         package:'Low-level conda package utility. (EXPERIMENTAL)'
         bundle:'Create or extract a "bundle package" (EXPERIMENTAL)'
     )
+    external=(
+        env:'Manage environments.'
+        )
     _describe -t package_commands "package commands" package
     _describe -t maint_commands "maint commands" maint
     _describe -t environment_commands "environment commands" environment
     _describe -t help_commands "help commands"  help
     _describe -t config_commands "config commands"  config
     _describe -t special_commands "special commands"  special
+    _describe -t external_commands "external commands"  external
 }
 
 __conda_caching_policy() {
@@ -314,7 +318,7 @@ opts=(
 )
 
 help_opts=(
-    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '(-h --help)'{-h,--help}'[show this help message and exit]' \
     )
 
 json_opts=(
@@ -525,6 +529,59 @@ case $state in
                       '--data-path[path to data to be included in bundle]:path:_path_files' \
                       '--extra-meta[path to json file with additional meta-data no]:path:_path_files' \
                       '--no-env[no environment]' \
+        ;;
+    (env)
+        _arguments -C $opts \
+                      ': :->command' \
+                      '*:: :->subcmd'
+        case $state in
+        (command)
+            local -a env
+            env=(
+                create:'Create an environment based on an environment file'
+                export:'Export a given environment'
+                list:'List the Conda environments'
+                remove:'Remove an environment'
+                update:'Update the current environment based on environment file'
+                )
+                _describe -t env_commands "help commands"  env
+            ;;
+        (subcmd)
+            case ${line[1]} in
+                (create)
+                    _arguments -C $help_opts \
+                                  $json_opts \
+                                  '(-n --name)'{-n,--name}'[name of environment]:environment:__conda_envs' \
+                                  '(-f --file)'{-f,--file}'[environment definition]:file:_path_files' \
+                                  '(-q --quiet)'{-q,--quiet}'[]' \
+                    ;;
+                (export)
+                    _arguments -C $help_opts \
+                                  '(-n --name)'{-n,--name}'[name of environment]:environment:__conda_envs' \
+                                  '(-f --file)'{-f,--file}'[]:file:_path_files' \
+                    ;;
+                (list)
+                    _arguments -C $help_opts \
+                                  $json_opts \
+                    ;;
+                (remove)
+                    _arguments -C $help_opts \
+                                  $json_opts \
+                                  $env_opts \
+                                  '(-q --quiet)'{-q,--quiet}'[do not display progress bar]'\
+                                  '(-y --yes)'{-y,--yes}'[do not ask for confirmation]' \
+                                  '--dry-run[only display what would have been done]' \
+                    ;;
+                (update)
+                    _arguments -C $help_opts \
+                                  $json_opts \
+                                  '(-n --name)'{-n,--name}'[name of environment]:environment:__conda_envs' \
+                                  '(-f --file)'{-f,--file}'[environment definition]:file:_path_files' \
+                                  '(-q --quiet)'{-q,--quiet}'[]' \
+                    ;;
+            esac
+            ;;
+        esac
         ;;
     esac
     ;;
