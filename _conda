@@ -80,12 +80,10 @@
 # * Make cache policy configurable
 # * Completion for version numbers is rudimentary:
 #   only 'install' can complete them and only for a single '=' sign
-# * Configuration for external commands, e.g. 'build' is entirely missing.
+# * Configuration for external commands: only build and env supported
 # * Properly handle package specs on the command line
 # * Don't continue to complete options once -- is given
 # * None of the commands are aware of channels
-# * Conda update completes existing packages also installed via pip.
-#   These can not be updated using conda..
 
 local state line context
 local -A opt_args
