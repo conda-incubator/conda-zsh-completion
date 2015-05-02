@@ -40,6 +40,7 @@
 # * v0.5
 #
 #   * conda-env can now be completed
+#   * conda-build can now be completed
 #
 # * v0.4
 #
@@ -299,6 +300,7 @@ __conda_commands(){
     )
     external=(
         env:'Manage environments.'
+        build:'tool for building conda packages'
         )
     _describe -t package_commands "package commands" package
     _describe -t maint_commands "maint commands" maint
@@ -534,6 +536,23 @@ case $state in
                       '--data-path[path to data to be included in bundle]:path:_path_files' \
                       '--extra-meta[path to json file with additional meta-data no]:path:_path_files' \
                       '--no-env[no environment]' \
+        ;;
+    (build)
+        _arguments -C $help_opts \
+                     '(-c --check)'{-c,--check}'[only check (validate) the recipe]' \
+                     '--no-binstar-upload[do not ask to upload the package to binstar]' \
+                     '--output[output the conda package filename which would have been created and exit]' \
+                     '(-s --source)'{-s,--source}'[only obtain the source (but don''t build)]' \
+                     '(-t --test)'{-t,--test}'[test package (assumes package is already build)]' \
+                     '--no-test[do not test the package]' \
+                     '(-b --build-only)'{-b,--build-only}'[only run the build, without any post processing or testing]' \
+                     '(-p --post)'{-p,--post}'[run the post-build logic]' \
+                     '(-V --version)'{-V,--version}'[show program''s version number and exit]' \
+                     '(-q --quiet)'{-q,--quiet}'[do not display progress bar]' \
+                     '--python[Set the Python version used by conda build]' \
+                     '--perl[Set the Perl version used by conda build]' \
+                     '--numpy[Set the NumPy version used by conda build]' \
+                     '*:recipe_path:_path_files' \
         ;;
     (env)
         _arguments -C $opts \
