@@ -26,6 +26,11 @@
 # To forcefully clean the completion cache, look in '~/.zcompcache' and remove
 # file starting with 'conda_'.
 #
+# When developing, you can use the following to reload the completion after
+# having modified it:
+#
+#    $ unfunction _conda && autoload -U _conda
+#
 # Please report any issues at:
 # https://github.com/esc/conda-zsh-completion/issues
 #
