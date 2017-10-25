@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+OLD_PWD=$(pwd)
+
 # Additional ZShell configs
 ADDITIONAL_CONFIGS='source ~/.config/zshrc/*'
 if [[ ! $( grep "$ADDITIONAL_CONFIGS" ~/.zshrc ) ]] ; then
@@ -18,3 +20,5 @@ echo 'compinit conda' >> ~/.config/zshrc/conda-zsh-completion.sh
 
 # Reload current config
 source ~/.config/zshrc/conda-zsh-completion.sh
+
+cd $OLD_PWD
