@@ -272,45 +272,31 @@ except KeyError:
 }
 
 __conda_commands(){
-    local -a package maint environment help config special
-    package=(
-        search:'Search for packages and display their information.'
-        install:'Install a list of packages into a specified conda environment.'
-    )
-    maint=(
-        update:'Update conda packages.'
-        clean:'Remove unused packages and caches.'
-    )
-    environment=(
-        info:'Display information about current conda install.'
-        create:'Create a new conda environment from a list of specified packages.'
-        list:'List linked packages in a conda environment.'
-        remove:'Remove a list of packages from a specified conda environment.'
-        uninstall:'Alias for conda remove'
-    )
-    help=(
-        help:'Displays a list of available conda commands and their help strings.'
-    )
-    config=(
-        config:'Modify configuration values in .condarc.'
-    )
-    special=(
-        run:'Launches an application installed with Conda.'
-        init:'Initialize conda into a regular environment. (DEPRECATED)'
-        package:'Low-level conda package utility. (EXPERIMENTAL)'
-        bundle:'Create or extract a "bundle package" (EXPERIMENTAL)'
-    )
-    external=(
-        env:'Manage environments.'
-        build:'tool for building conda packages'
+    local -a commands
+    commands=(
+        '1:command:((
+        search\:Search\ for\ packages\ and\ display\ their\ information\.
+        install\:Install\ a\ list\ of\ packages\ into\ a\ specified\ conda\ environment\.
+        update\:Update\ conda\ packages\.
+        clean\:Remove\ unused\ packages\ and\ caches\.
+        info\:Display\ information\ about\ current\ conda\ install\.
+        create\:Create\ a\ new\ conda\ environment\ from\ a\ list\ of\ specified\ packages\.
+        list\:List\ linked\ packages\ in\ a\ conda\ environment\.
+        remove\:Remove\ a\ list\ of\ packages\ from\ a\ specified\ conda\ environment\.
+        uninstall\:Alias\ for\ conda\ remove
+        help\:Displays\ a\ list\ of\ available\ conda\ commands\ and\ their\ help\ strings\.
+        config\:Modify\ configuration\ values\ in\ \.condarc\.
+        run\:Launches\ an\ application\ installed\ with\ Conda\.
+        init\:Initialize\ conda\ into\ a\ regular\ environment\.\ \(DEPRECATED\)
+        package\:Low\-level\ conda\ package\ utility\.\ \(EXPERIMENTAL\)
+        bundle\:Create\ or\ extract\ a\ "bundle\ package"\ \(EXPERIMENTAL\)
+        env\:Manage\ environments\.
+        build\:tool\ for\ building\ conda\ packages
+        activate\:activate\ an\ environment
+        deactivate\:deactivate\ an\ environment
+        ))'
         )
-    _describe -t package_commands "package commands" package
-    _describe -t maint_commands "maint commands" maint
-    _describe -t environment_commands "environment commands" environment
-    _describe -t help_commands "help commands"  help
-    _describe -t config_commands "config commands"  config
-    _describe -t special_commands "special commands"  special
-    _describe -t external_commands "external commands"  external
+        _arguments $commands
 }
 
 __conda_caching_policy() {
@@ -609,6 +595,8 @@ case $state in
             ;;
         esac
         ;;
+    (activate)
+        _arguments -C '*:env:__conda_envs'
     esac
     ;;
 esac
