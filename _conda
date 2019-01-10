@@ -400,8 +400,7 @@ case $state in
                       '*:packages:__describe_conda_package_available' \
         ;;
     (activate)
-        _arguments -C $help_opts \
-                   '*:environment:__conda_envs' \
+        _arguments -C '*:environment:__conda_envs' \
         ;;
     (help)
         _arguments -C $help_opts \
