@@ -299,8 +299,8 @@ __conda_commands(){
         init:'Initialize conda into a regular environment. (DEPRECATED)'
         package:'Low-level conda package utility. (EXPERIMENTAL)'
         bundle:'Create or extract a "bundle package" (EXPERIMENTAL)'
-        activate:'Init a conda env (dependent on conda.sh in profile)'
-        deactivate:'Leave a conda env'
+        activate:'Init a conda env (conda >= 4.4)'
+        deactivate:'Leave a conda env (conda >= 4.4)'
     )
     external=(
         env:'Manage environments.'
