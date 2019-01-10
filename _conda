@@ -299,6 +299,8 @@ __conda_commands(){
         init:'Initialize conda into a regular environment. (DEPRECATED)'
         package:'Low-level conda package utility. (EXPERIMENTAL)'
         bundle:'Create or extract a "bundle package" (EXPERIMENTAL)'
+        activate:'Init a conda env (dependent on conda.sh in profile)'
+        deactivate:'Leave a conda env'
     )
     external=(
         env:'Manage environments.'
@@ -397,6 +399,10 @@ case $state in
                       '--root[display root environment path]' \
                       '*:packages:__describe_conda_package_available' \
         ;;
+    (activate)
+        _arguments -C $help_opts \
+                   '*:environment:__conda_envs' \
+        ;;
     (help)
         _arguments -C $help_opts \
                       '*:commands:__conda_commands' \
@@ -481,7 +487,7 @@ case $state in
                       '*:packages:{__conda_packages_installed $specifier $environment}' \
         ;;
     (config)
-        # this allows completing multiple keys whet --get is given
+        # this allows completing multiple keys when --get is given
         local -a last_item get_opts
         last_item=$line[$CURRENT-1]
         if (( ${line[(I)--get]} ))  && (( ${__conda_config_keys[(I)$last_item]} )) ; then
