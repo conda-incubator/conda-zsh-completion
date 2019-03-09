@@ -488,7 +488,7 @@ case $state in
                       '*:packages:{__conda_packages_installed $specifier $environment}' \
         ;;
     (config)
-        # this allows completing multiple keys whet --get is given
+        # this allows completing multiple keys when --get is given
         local -a last_item get_opts
         last_item=$line[$CURRENT-1]
         if (( ${line[(I)--get]} ))  && (( ${__conda_config_keys[(I)$last_item]} )) ; then
