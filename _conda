@@ -39,7 +39,8 @@
 #
 # * v0.6
 #
-#   * 
+#   * conda activate and conda deactivate can now be completed, thanks to
+#     Taylor Kang Beck
 #
 # * v0.5
 #
