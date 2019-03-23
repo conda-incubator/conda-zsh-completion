@@ -22,6 +22,10 @@
 # '.zshrc':
 #
 #     zstyle ':completion::complete:*' use-cache 1
+# To display subcommand completion in groups, please add the following to your
+# '.zshrc':
+#
+#    zstyle ":conda_zsh_completion:*" use-groups true
 #
 # To forcefully clean the completion cache, look in '~/.zcompcache' and remove
 # file starting with 'conda_'.
@@ -311,13 +315,21 @@ __conda_commands(){
         env:'Manage environments.'
         build:'tool for building conda packages'
         )
-    _describe -t package_commands "package commands" package
-    _describe -t maint_commands "maint commands" maint
-    _describe -t environment_commands "environment commands" environment
-    _describe -t help_commands "help commands"  help
-    _describe -t config_commands "config commands"  config
-    _describe -t special_commands "special commands"  special
-    _describe -t external_commands "external commands"  external
+
+    # This takes care of alignment if the user wanted the subcommand completion
+    # to be split into groups.
+    zstyle -s ":conda_zsh_completion:*" use-groups tmp
+    if [[ -n $tmp ]] ; then
+        _describe -t package_commands "package commands" package
+        _describe -t maint_commands "maint commands" maint
+        _describe -t environment_commands "environment commands" environment
+        _describe -t help_commands "help commands"  help
+        _describe -t config_commands "config commands"  config
+        _describe -t special_commands "special commands"  special
+        _describe -t external_commands "external commands"  external
+    else
+        _describe "conda commands" package -- maint -- environment -- help -- config -- special -- external
+    fi
 }
 
 __conda_caching_policy() {
