@@ -12,23 +12,31 @@
 # This completion depends on Python for a json parser, sorry. Unfortunately
 # there is no such thing in zsh (yet).
 #
-# To use this completion drop it somewhere in you '$fpath', e.g.:
+# To use this completion, install it somewhere on your hard drive:
 #
-#     $ git clone $CLONEURL
-#     $ fpath+=$PWD/conda-zsh-completion
-#     $ compinit conda
+#     $ git clone https://github.com/esc/conda-zsh-completion
+#
+# And then add it to your $fpath in ~/.zshrc before you call compinit:
+# 
+#     fpath+=/path/to/where/you/installed/conda-zsh-completion
+#     compinit
+#
+# (If you're using oh-my-zsh or Prezto, they will call compinit for you, so
+# just add it to your $fpath before calling the OMZ or Prezto initialization
+# functions.)
 #
 # To activate the completion cache for packages, add the following to your
 # '.zshrc':
 #
 #     zstyle ':completion::complete:*' use-cache 1
+#
 # To display subcommand completion in groups, please add the following to your
 # '.zshrc':
 #
 #    zstyle ":conda_zsh_completion:*" use-groups true
 #
 # To forcefully clean the completion cache, look in '~/.zcompcache' and remove
-# file starting with 'conda_'.
+# file starting with 'conda_'. And/or do 'rm ~/.zcompdump*'.
 #
 # When developing, you can use the following to reload the completion after
 # having modified it:
