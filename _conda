@@ -17,7 +17,7 @@
 #     $ git clone https://github.com/esc/conda-zsh-completion
 #
 # And then add it to your $fpath in ~/.zshrc before you call compinit:
-# 
+#
 #     fpath+=/path/to/where/you/installed/conda-zsh-completion
 #     compinit
 #
@@ -51,7 +51,8 @@
 #
 # * v0.8
 #
-#   * XXX
+#   * Updated installation instructions and added a license file, thanks to
+#     Andrew Janke
 #
 # * v0.7
 #
