@@ -1,6 +1,22 @@
 conda-zsh-completion
 --------------------
 
+Installation
+------------
+`oh-my-zsh <http://github.com/robbyrussell/oh-my-zsh>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```bash
+git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+```
+
+add lines in `.zshrc`
+```
+plugins=(… conda-zsh-completion)
+autoload -U compinit && compinit
+```
+
+Manual
+~~~~~~
 Please see the top of the ``_conda`` file for more info.
 
 :License: |license|
