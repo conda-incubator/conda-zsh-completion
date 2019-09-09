@@ -3,17 +3,21 @@ conda-zsh-completion
 
 Installation
 ------------
-`oh-my-zsh <http://github.com/robbyrussell/oh-my-zsh>`
+`oh-my-zsh <http://github.com/robbyrussell/oh-my-zsh>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-```bash
-git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
-```
+
+.. code-block:: bash
+
+        git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+
 
 add lines in `.zshrc`
-```
-plugins=(… conda-zsh-completion)
-autoload -U compinit && compinit
-```
+
+.. code-block:: zsh
+        
+        plugins=(… conda-zsh-completion)
+        autoload -U compinit && compinit
+
 
 Manual
 ~~~~~~
