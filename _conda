@@ -21,9 +21,15 @@
 #     fpath+=/path/to/where/you/installed/conda-zsh-completion
 #     compinit
 #
-# (If you're using oh-my-zsh or Prezto, they will call compinit for you, so
+# If you're using oh-my-zsh or Prezto, they will call compinit for you, so
 # just add it to your $fpath before calling the OMZ or Prezto initialization
-# functions.)
+# functions. For example:
+#
+#     git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+#
+# And add lines in `.zshrc`
+#     plugins=(… conda-zsh-completion)
+#     autoload -U compinit && compinit
 #
 # To activate the completion cache for packages, add the following to your
 # '.zshrc':
