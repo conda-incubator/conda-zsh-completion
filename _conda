@@ -297,7 +297,7 @@ except KeyError:
 }
 
 __conda_commands(){
-    local -a package maint environment help config special
+    local -a package maint environment help config special tmp
     package=(
         search:'Search for packages and display their information.'
         install:'Install a list of packages into a specified conda environment.'
