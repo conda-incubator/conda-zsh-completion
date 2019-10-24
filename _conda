@@ -25,7 +25,7 @@
 # just add it to your $fpath before calling the OMZ or Prezto initialization
 # functions. For example:
 #
-#     git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+#     git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion
 #
 # And add lines in `.zshrc`
 #     plugins=(… conda-zsh-completion)
