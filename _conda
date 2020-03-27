@@ -329,7 +329,7 @@ __conda_commands(){
     )
     special=(
         run:'Launches an application installed with Conda.'
-        init:'Initialize conda into a regular environment. (DEPRECATED)'
+        init:'Initialize conda into a regular environment. (EXPERIMENTAL)'
         package:'Low-level conda package utility. (EXPERIMENTAL)'
         bundle:'Create or extract a "bundle package" (EXPERIMENTAL)'
     )
