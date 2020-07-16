@@ -128,7 +128,7 @@ local -A opt_args
 
 __conda_envs(){
     local -a envs
-    envs=($( cat $HOME/.conda/environments.txt | cut -f1 -d' '))
+    envs=($(echo base && cat $HOME/.conda/environments.txt | cut -f1 -d' '))
     _describe -t envs 'conda environments' envs
 }
 
