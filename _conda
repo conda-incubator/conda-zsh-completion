@@ -44,6 +44,11 @@
 #
 #    zstyle ":conda_zsh_completion:*" use-groups true
 #
+# To display unnamed environments and prefixes of environments, add the following
+# to your '.zshrc':
+#
+#    zstyle ":conda_zsh_completion:*" show-unnamed true
+#
 # To forcefully clean the completion cache, look in '~/.zcompcache' and remove
 # file starting with 'conda_'. And/or do 'rm ~/.zcompdump*'.
 #
@@ -128,7 +133,9 @@ local -A opt_args
 
 __conda_envs(){
     local -a envs
-    envs=($(echo base && ls -1 ${${CONDA_EXE}%bin/conda}/envs && cat ${HOME:?}/.conda/environments.txt | cut -f1 -d' '))
+    # only parse environments.txt (including unnamed envs) if asked by the user
+    zstyle -s ":conda_zsh_completion:*" show-unnamed tmp
+    envs=($(echo base && ls -1 ${${CONDA_EXE}%bin/conda}/envs && (test -n "$tmp" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' '))
     _describe -t envs 'conda environments' envs
 }
 
