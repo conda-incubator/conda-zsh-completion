@@ -5,7 +5,7 @@
 #
 # Author: Valentin Haenel <valentin@haenel.co>  (https://github.com/esc/)
 # Licence: WTFPL (http://sam.zoy.org/wtfpl/)
-# Version: 0.9
+# Version: 0.10-dev
 # Homepage: https://github.com/esc/conda-zsh-completion
 # Demo: https://asciinema.org/a/16516
 #
@@ -62,6 +62,10 @@
 #
 # CHANGELOG
 # ---------
+# * v0.10
+#
+#   * XXX
+#
 # * v0.9
 #
 #   * Improved the completion speed for completing environments, thanks to
