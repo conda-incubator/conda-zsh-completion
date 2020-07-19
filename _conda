@@ -31,9 +31,9 @@
 #     plugins=(… conda-zsh-completion)
 #     autoload -U compinit && compinit
 #
-# If you use oh-my-zsh, you might have to move the "autoload" line to after you sourced 
+# If you use oh-my-zsh, you might have to move the "autoload" line to after you sourced
 # oh-my-zsh.sh.
-# 
+#
 # To activate the completion cache for packages, add the following to your
 # '.zshrc':
 #
