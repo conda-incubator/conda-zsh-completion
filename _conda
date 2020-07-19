@@ -64,7 +64,9 @@
 # ---------
 # * v0.9
 #
-#   * XXX
+#   * Improved the completion speed for completing environments, thanks to
+#     Niels Mündler.
+#   * Various minor improvements and documentation upgrades
 #
 # * v0.8
 #
