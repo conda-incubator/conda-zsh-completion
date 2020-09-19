@@ -49,6 +49,11 @@
 #
 #    zstyle ":conda_zsh_completion:*" show-unnamed true
 #
+# To display environments autocompletion sorted in creation order add the following
+# to your '.zshrc':
+#
+#    zstyle ":conda_zsh_completion:*" sort-envs-by-time true
+#
 # To forcefully clean the completion cache, look in '~/.zcompcache' and remove
 # file starting with 'conda_'. And/or do 'rm ~/.zcompdump*'.
 #
@@ -139,10 +144,18 @@ local -A opt_args
 
 __conda_envs(){
     local -a envs
+    local -a ls_opts=("-1")
+    local -a describe_opts
     # only parse environments.txt (including unnamed envs) if asked by the user
-    zstyle -s ":conda_zsh_completion:*" show-unnamed tmp
-    envs=($(echo base && ls -1 ${${CONDA_EXE}%bin/conda}/envs && (test -n "$tmp" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' '))
-    _describe -t envs 'conda environments' envs
+    zstyle -s ":conda_zsh_completion:*" show-unnamed unnamed
+    zstyle -s ":conda_zsh_completion:*" sort-envs-by-time sort
+    if test -n "$sort"; then
+        ls_opts+=("-t")
+        describe_opts+=("-V")
+    fi
+
+    envs=($(ls $ls_opts ${${CONDA_EXE}%bin/conda}/envs && echo base && (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' '))
+    _describe $describe_opts -t envs 'conda environments' envs
 }
 
 __conda_packages_installed(){
