@@ -141,7 +141,7 @@ __conda_envs(){
     local -a envs
     # only parse environments.txt (including unnamed envs) if asked by the user
     zstyle -s ":conda_zsh_completion:*" show-unnamed tmp
-    envs=($(echo base && ls -1 ${${CONDA_EXE}%bin/conda}/envs && (test -n "$tmp" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' '))
+    envs=($(echo base && ls -1 ${${CONDA_EXE}%bin/conda}/envs && (test -n "$tmp" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' ' | sed -e "s|^${HOME:?}/.conda/envs/||"))
     _describe -t envs 'conda environments' envs
 }
 
