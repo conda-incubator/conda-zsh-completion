@@ -143,7 +143,7 @@ local state line context
 local -A opt_args
 
 __conda_envs(){
-    local -a envs
+    local -a envs unnamed sort
     local -a ls_opts=("-1")
     local -a describe_opts
     # only parse environments.txt (including unnamed envs) if asked by the user
@@ -154,7 +154,7 @@ __conda_envs(){
         describe_opts+=("-V")
     fi
 
-    envs=($(ls $ls_opts ${${CONDA_EXE}%bin/conda}/envs && echo base && (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' '))
+    envs=($(echo base ; ([[ -d "${${CONDA_EXE}%bin/conda}/envs" ]] && ls $ls_opts ${${CONDA_EXE}%bin/conda}/envs) ; ([[ -d "${HOME:?}/.conda/envs" ]] && ls $ls_opts ${HOME:?}/.conda/envs) ; (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' '))
     _describe $describe_opts -t envs 'conda environments' envs
 }
 
