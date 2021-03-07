@@ -180,7 +180,7 @@ __conda_envs(){
         
     # unmaned envs (if show-unammed). 
     if test -n "$unnamed"; then
-        envs+=($( (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' '))
+        envs+=($( (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' ' | sed -e "s|^${HOME:?}/.conda/envs/||"))
     fi
 
     _describe $describe_opts -t envs 'conda environments' envs
