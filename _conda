@@ -1,4 +1,4 @@
-#compdef conda
+#compdef conda mamba
 #description:conda package manager
 #
 # ZSH Completion for conda (http://conda.pydata.org/)
