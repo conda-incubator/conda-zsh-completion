@@ -171,14 +171,14 @@ __conda_envs(){
     globalenvs+=("base")
 
     # local envs (if exists).
-    if [[ -n $CONDA_ENVS_PATH ]]; then
-        localenvspath=$CONDA_ENVS_PATH
-    elif [[ -n $CONDA_ENVS_DIRS ]]; then
-        localenvspath=$CONDA_ENVS_DIRS
+    if [[ -n "$CONDA_ENVS_PATH" ]]; then
+        localenvspath="$CONDA_ENVS_PATH"
+    elif [[ -n "$CONDA_ENVS_DIRS" ]]; then
+        localenvspath="$CONDA_ENVS_DIRS"
     else
-        localenvspath=${HOME:?}/.conda/envs
+        localenvspath="${HOME:?}/.conda/envs"
     fi
-    localenvs=($([[ -d $localenvspath ]] && ls $ls_opts $localenvspath))
+    localenvs=($([[ -d "$localenvspath" ]] && ls $ls_opts "$localenvspath"))
 
     if test -n "$globalfirst"; then
         envs=($globalenvs $localenvs)
