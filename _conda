@@ -79,7 +79,7 @@
 # ---------
 # * v0.10
 #
-#   * XXX
+#   * Search environments in custom environments paths, thanks to Thomas G. (coldfix).
 #
 # * v0.9
 #
