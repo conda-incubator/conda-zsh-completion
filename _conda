@@ -156,6 +156,7 @@ __conda_envs(){
     local -a envs unnamed sort globalfirst localenvs globalenvs
     local -a ls_opts=("-1")
     local -a describe_opts
+    local localenvspath
     # only parse environments.txt (including unnamed envs) if asked by the user
     zstyle -s ":conda_zsh_completion:*" show-unnamed unnamed
     zstyle -s ":conda_zsh_completion:*" sort-envs-by-time sort
@@ -170,7 +171,14 @@ __conda_envs(){
     globalenvs+=("base")
 
     # local envs (if exists).
-    localenvs=($([[ -d "${HOME:?}/.conda/envs" ]] && ls $ls_opts ${HOME:?}/.conda/envs))
+    if [[ -n "$CONDA_ENVS_PATH" ]]; then
+        localenvspath="$CONDA_ENVS_PATH"
+    elif [[ -n "$CONDA_ENVS_DIRS" ]]; then
+        localenvspath="$CONDA_ENVS_DIRS"
+    else
+        localenvspath="${HOME:?}/.conda/envs"
+    fi
+    localenvs=($([[ -d "$localenvspath" ]] && ls $ls_opts "$localenvspath"))
 
     if test -n "$globalfirst"; then
         envs=($globalenvs $localenvs)
@@ -180,7 +188,7 @@ __conda_envs(){
         
     # unmaned envs (if show-unammed). 
     if test -n "$unnamed"; then
-        envs+=($( (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' ' | sed -e "s|^${HOME:?}/.conda/envs/||"))
+        envs+=($( (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' ' | sed -e "s|^$localenvspath/||"))
     fi
 
     _describe $describe_opts -t envs 'conda environments' envs
