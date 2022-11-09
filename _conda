@@ -53,14 +53,14 @@
 # to your '.zshrc':
 #
 #    zstyle ":conda_zsh_completion:*" sort-envs-by-time true
-# 
+#
 # The completion will display both global environments (envs located in conda_dir/envs and base env)
 # and local environments (located in ~/.conda/envs).
 # If enables sort-envs-by-time, it will display local environments first.
 # To display global environments first, add the following to your '.zshrc':
 #
 #    zstyle ":conda_zsh_completion:*" show-global-envs-first true
-# 
+#
 # If not enables sort-envs-by-time, then all environments will be sorted by alphabetical order,
 # and this option is useless.
 #
@@ -154,13 +154,15 @@ local -A opt_args
 
 __conda_envs(){
     local -a envs unnamed sort globalfirst localenvs globalenvs
-    local -a ls_opts=("-1")
+    local -a ls_opts
     local -a describe_opts
     local localenvspath
     # only parse environments.txt (including unnamed envs) if asked by the user
     zstyle -s ":conda_zsh_completion:*" show-unnamed unnamed
     zstyle -s ":conda_zsh_completion:*" sort-envs-by-time sort
     zstyle -s ":conda_zsh_completion:*" show-global-envs-first globalfirst
+
+    ls_opts=("-1")
     if test -n "$sort"; then
         ls_opts+=("-t")
         describe_opts+=("-V")
@@ -185,8 +187,8 @@ __conda_envs(){
     else
         envs=($localenvs $globalenvs)
     fi
-        
-    # unmaned envs (if show-unammed). 
+
+    # unmaned envs (if show-unammed).
     if test -n "$unnamed"; then
         envs+=($( (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' ' | sed -e "s|^$localenvspath/||"))
     fi
