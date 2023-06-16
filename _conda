@@ -5,7 +5,7 @@
 #
 # Author: Valentin Haenel <valentin@haenel.co>  (https://github.com/esc/)
 # Licence: WTFPL (http://sam.zoy.org/wtfpl/)
-# Version: 0.10-dev
+# Version: 0.10
 # Homepage: https://github.com/esc/conda-zsh-completion
 # Demo: https://asciinema.org/a/16516
 #
@@ -53,14 +53,14 @@
 # to your '.zshrc':
 #
 #    zstyle ":conda_zsh_completion:*" sort-envs-by-time true
-# 
+#
 # The completion will display both global environments (envs located in conda_dir/envs and base env)
 # and local environments (located in ~/.conda/envs).
 # If enables sort-envs-by-time, it will display local environments first.
 # To display global environments first, add the following to your '.zshrc':
 #
 #    zstyle ":conda_zsh_completion:*" show-global-envs-first true
-# 
+#
 # If not enables sort-envs-by-time, then all environments will be sorted by alphabetical order,
 # and this option is useless.
 #
@@ -77,9 +77,14 @@
 #
 # CHANGELOG
 # ---------
+#
 # * v0.10
 #
 #   * Search environments in custom environments paths, thanks to Thomas G. (coldfix).
+#   * Naive mamba support, thanks to olegtarasov
+#   * Remove path prefix from environments in default location, thanks to 3mb3dw0rk5
+#   * Sort environments to be completed by creation time, thanks to m-novikov
+#   * Check for environment directory before accessing, thanks to huyz-git
 #
 # * v0.9
 #
@@ -185,8 +190,8 @@ __conda_envs(){
     else
         envs=($localenvs $globalenvs)
     fi
-        
-    # unmaned envs (if show-unammed). 
+
+    # unmaned envs (if show-unammed).
     if test -n "$unnamed"; then
         envs+=($( (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' ' | sed -e "s|^$localenvspath/||"))
     fi
