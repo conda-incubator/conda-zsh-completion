@@ -6,7 +6,7 @@
 # Author: Valentin Haenel <valentin@haenel.co>  (https://github.com/esc/)
 # Licence: WTFPL (http://sam.zoy.org/wtfpl/)
 # Version: 0.11-dev
-# Homepage: https://github.com/esc/conda-zsh-completion
+# Homepage: https://github.com/conda-incubator/conda-zsh-completion
 # Demo: https://asciinema.org/a/16516
 #
 # This completion depends on Python for a json parser, sorry. Unfortunately
