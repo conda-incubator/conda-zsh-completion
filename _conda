@@ -14,7 +14,7 @@
 #
 # To use this completion, install it somewhere on your hard drive:
 #
-#     $ git clone https://github.com/esc/conda-zsh-completion
+#     $ git clone https://github.com/conda-incubator/conda-zsh-completion
 #
 # And then add it to your $fpath in ~/.zshrc before you call compinit:
 #
@@ -25,7 +25,7 @@
 # just add it to your $fpath before calling the OMZ or Prezto initialization
 # functions. For example:
 #
-#     git clone https://github.com/esc/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion
+#     git clone https://github.com/conda-incubator/conda-zsh-completion ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion
 #
 # And add lines in `.zshrc`
 #     plugins=(… conda-zsh-completion)
@@ -73,7 +73,7 @@
 #    $ unfunction _conda && autoload -U _conda
 #
 # Please report any issues at:
-# https://github.com/esc/conda-zsh-completion/issues
+# https://github.com/conda-incubator/conda-zsh-completion/issues
 #
 # CHANGELOG
 # ---------
