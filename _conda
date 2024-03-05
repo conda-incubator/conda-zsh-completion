@@ -219,8 +219,11 @@ __conda_package_available(){
         python -c "
 import json, sys
 parsed = json.load(sys.stdin)
-for k in parsed.keys():
-    print(k)
+try:
+    for k in parsed.keys():
+        print(k)
+except KeyboardInterrupt:
+    pass
         "))
         _store_cache conda_available_packages available_packages
     fi
@@ -240,8 +243,11 @@ __conda_existing_config_keys(){
         python -c "
 import json, sys
 keys = json.load(sys.stdin)['get'].keys()
-for k in keys:
-    print(k)
+try:
+    for k in keys:
+        print(k)
+except KeyboardInterrupt:
+    pass
         "))
     print -l $config_keys
 }
@@ -282,9 +288,7 @@ try:
     values = json.load(sys.stdin)['get']['$search_term']
     for v in values:
         print(v)
-except KeyError:
-    pass
-except ValueError:
+except (KeyError, VlaueError, KeyboardInterrupt):
     pass
         "))
     print -l $config_values
@@ -368,7 +372,7 @@ try:
     versions = set((e['version'] for e in json.load(sys.stdin)['$current_package']))
     for v in versions:
         print(v)
-except KeyError:
+except (KeyError, KeyboardInterrupt):
     pass
     "))
     _describe -t versions "$current_package version" versions
