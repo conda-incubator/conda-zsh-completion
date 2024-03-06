@@ -5,7 +5,7 @@
 #
 # Author: Valentin Haenel <valentin@haenel.co>  (https://github.com/esc/)
 # Licence: WTFPL (http://sam.zoy.org/wtfpl/)
-# Version: 0.11-dev
+# Version: 0.11
 # Homepage: https://github.com/conda-incubator/conda-zsh-completion
 # Demo: https://asciinema.org/a/16516
 #
@@ -77,6 +77,15 @@
 #
 # CHANGELOG
 # ---------
+#
+# * v0.11
+#
+#    * fix repo url in doc (esc)
+#    * ignore `KeyboardInterrupt` exception (rmekdma)
+#    * Fix completion of dir local prefixed environments (johannes-mueller)
+#    * Set initial value outside of local. (hwalinga)
+#    * Update repository URL (dstansby)
+#    * Add micromamba naive support (antony-frolov)
 #
 # * v0.10
 #
