@@ -703,18 +703,19 @@ case $state in
                 (create)
                     _arguments -C $help_opts \
                                   $json_opts \
-                                  '(-n --name)'{-n,--name}'[name of environment]:environment:__conda_envs' \
+                                  $env_opts \
                                   '(-f --file)'{-f,--file}'[environment definition]:file:_path_files' \
                                   '(-q --quiet)'{-q,--quiet}'[]' \
                     ;;
                 (export)
                     _arguments -C $help_opts \
-                                  '(-n --name)'{-n,--name}'[name of environment]:environment:__conda_envs' \
+                                  $env_opts \
                                   '(-f --file)'{-f,--file}'[]:file:_path_files' \
                     ;;
                 (list)
                     _arguments -C $help_opts \
                                   $json_opts \
+                                  $env_opts
                     ;;
                 (remove)
                     _arguments -C $help_opts \
@@ -727,7 +728,7 @@ case $state in
                 (update)
                     _arguments -C $help_opts \
                                   $json_opts \
-                                  '(-n --name)'{-n,--name}'[name of environment]:environment:__conda_envs' \
+                                  $env_opts \
                                   '(-f --file)'{-f,--file}'[environment definition]:file:_path_files' \
                                   '(-q --quiet)'{-q,--quiet}'[]' \
                     ;;
@@ -738,7 +739,7 @@ case $state in
     (activate)
             _arguments -C $help_opts \
                           '--stack[activate this environment on top of the previous environment]' \
-                          '*:environment:__conda_envs'
+                          '*:environment:{__conda_envs; _path_files}'
                     ;;
     (deactivate)
             _arguments -C $help_opts \
