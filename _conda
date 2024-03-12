@@ -462,7 +462,7 @@ json_opts=(
 
 env_opts=(
     '(-n --name -p --prefix)'{-n,--name}'[name of environment]:environment:__conda_envs' \
-    '(-n --name -p --prefix)'{-p,--prefix}'[full path to environment prefix]:path:_path_files' \
+    '(-n --name -p --prefix)'{-p,--prefix}'[full path to environment prefix]:prefix:_directories' \
     )
 
 channel_opts=(
@@ -739,7 +739,7 @@ case $state in
     (activate)
             _arguments -C $help_opts \
                           '--stack[activate this environment on top of the previous environment]' \
-                          '*:environment:{__conda_envs; _path_files}'
+                          '*:environment:{__conda_envs; _directories}'
                     ;;
     (deactivate)
             _arguments -C $help_opts \
