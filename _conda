@@ -204,7 +204,7 @@ __conda_envs(){
 
     # unmaned envs (if show-unammed).
     if test -n "$unnamed"; then
-        envs+=($( (test -n "$unnamed" && cat ${HOME:?}/.conda/environments.txt) | cut -f1 -d' ' | sed -e "s|^${PWD}|.|" | sed -e "s|^$localenvspath/||"))
+        envs+=($( (cat ${HOME:?}/.conda/environments.txt) 2>/dev/null | cut -f1 -d' ' | sed -e "s|^${PWD}|.|" | sed -e "s|^$localenvspath/||"))
     fi
 
     _describe $describe_opts -t envs 'conda environments' envs
@@ -746,4 +746,3 @@ case $state in
     esac
     ;;
 esac
-
