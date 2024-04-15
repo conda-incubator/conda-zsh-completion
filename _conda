@@ -185,7 +185,7 @@ __conda_envs(){
 
     conda_exec=$(which conda)
 
-# Detect homebrew installations and set path accordingly.
+    # Detect homebrew installations and set path accordingly.
     if [[ ${${conda_exec}#*"homebrew"} != ${conda_exec} ]]; then
         conda_path="/opt/homebrew/Caskroom/miniconda/base/envs"
     else
