@@ -168,6 +168,7 @@ local -A opt_args
 
 __conda_envs(){
     local -a envs unnamed sort globalfirst localenvs globalenvs
+    local -a conda_path
     local -a ls_opts
     local -a describe_opts
     local localenvspath
@@ -182,8 +183,17 @@ __conda_envs(){
         describe_opts+=("-V")
     fi
 
+    conda_exec=$(which conda)
+
+    # Detect homebrew installations and set path accordingly.
+    if [[ ${${conda_exec}#*"homebrew"} != ${conda_exec} ]]; then
+        conda_path="/opt/homebrew/Caskroom/miniconda/base/envs"
+    else
+        conda_path="${${CONDA_EXE}%bin/conda}/envs"
+    fi
+
     # global envs (if exists) and base env.
-    globalenvs=($([[ -d "${${CONDA_EXE}%bin/conda}/envs" ]] && ls $ls_opts ${${CONDA_EXE}%bin/conda}/envs))
+    globalenvs=($([[ -d "${conda_path}" ]] && ls $ls_opts ${conda_path}))
     globalenvs+=("base")
 
     # local envs (if exists).
