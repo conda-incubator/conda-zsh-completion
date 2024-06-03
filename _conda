@@ -562,7 +562,7 @@ case $state in
                       '--platform[Search the given platform.]' \
                       '--spec[Treat regex argument as a package specification]' \
                       '(-i --info)'{-v,--verbose}'[Provide detailed information about each package.]' \
-                      '*:packages:__magic' \
+                      '*:regex:' \
         ;;
     (create)
         _arguments -C $help_opts \
