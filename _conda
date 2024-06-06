@@ -80,6 +80,7 @@
 #
 # * v0.12
 #
+#    * update conda search completion (#62 esc)
 #    * Conda info: removed arg package (#61 Hanspe-3019)
 #
 # * v0.11
