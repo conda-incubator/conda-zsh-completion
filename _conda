@@ -39,6 +39,12 @@
 #
 #     zstyle ':completion::complete:*' use-cache 1
 #
+# Note: this is IMPORTANT to activate! Otherwise the completion will appear to
+# hang when attempting to complete package names when using `conda install` as
+# the completion will attempt to fetch the list of ALL available packages from
+# anaconda.org. This may take 10s of seconds and the completion looks like it
+# 'hangs' while doing so.
+#
 # To display subcommand completion in groups, please add the following to your
 # '.zshrc':
 #
