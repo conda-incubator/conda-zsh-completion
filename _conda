@@ -31,6 +31,16 @@
 #     plugins=(… conda-zsh-completion)
 #     autoload -U compinit && compinit
 #
+# If you're using zim(Zsh IMproved), you must add it before `zmodule completion` to `.zimrc`,
+# completion zmodule will call compinit for you, `.zimrc` should like this:
+#
+# …
+# zmodule conda-incubator/conda-zsh-completion
+# zmodule completion
+# …
+#
+# and then run `zimfw install -v && exec zsh`
+#
 # If you use oh-my-zsh, you might have to move the "autoload" line to after you sourced
 # oh-my-zsh.sh.
 #
